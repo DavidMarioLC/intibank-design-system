@@ -2,6 +2,12 @@
 @import "intibank-ui/styles/tokens.css";
 @import "intibank-ui/styles/semantic.css";
 
+/* packages/ui vive fuera de apps/storybook y solo se alcanza vía el symlink
+   de node_modules — Tailwind excluye node_modules del auto-detect, así que
+   sin esto las clases usadas en los componentes (bg-primary, etc.) nunca
+   se generan. */
+@source "../../../packages/ui/src";
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

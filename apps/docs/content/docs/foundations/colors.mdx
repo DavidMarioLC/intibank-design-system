@@ -1,0 +1,77 @@
+---
+title: Colors
+description: Paleta base y variables semánticas del design system de Intibank
+---
+
+Intibank usa un sistema de color en dos capas: una **paleta base** (los valores "crudos") y una capa de **variables semánticas** que es la única que se consume directamente en los componentes. Si el color de marca cambia, se edita en un solo lugar y todo el sistema se actualiza.
+
+<Callout title="Modo claro / oscuro">
+  Estos swatches leen las variables CSS activas en la página. Usa el selector de tema (ícono de
+  luna/sol en la esquina superior) para ver los valores de modo oscuro.
+</Callout>
+
+## Paleta base
+
+La paleta base nunca se referencia directo en componentes — solo alimenta la capa semántica.
+
+### Inti — dorado/ámbar solar (primario)
+
+<ColorScale name="inti" />
+
+### Terracota — cerámica/textiles andinos (secundario)
+
+<ColorScale name="terracota" />
+
+### Noche — índigo profundo (anclaje / confianza)
+
+<ColorScale name="noche" />
+
+### Arena — neutros cálidos
+
+<ColorScale name="arena" />
+
+## Variables semánticas
+
+La capa que realmente consumen los componentes (`bg-primary`, `text-foreground`, `border-border`, etc.), siguiendo la convención de shadcn/ui.
+
+### Superficies
+
+<SemanticGrid>
+  <SemanticSwatch name="background" label="Background" />
+  <SemanticSwatch name="foreground" label="Foreground" />
+  <SemanticSwatch name="card" label="Card" />
+  <SemanticSwatch name="popover" label="Popover" />
+</SemanticGrid>
+
+### Bordes y controles
+
+<SemanticGrid>
+  <SemanticSwatch name="border" label="Border" />
+  <SemanticSwatch name="input" label="Input" />
+  <SemanticSwatch name="ring" label="Ring" />
+  <SemanticSwatch name="muted" label="Muted" />
+</SemanticGrid>
+
+### Marca
+
+<SemanticGrid>
+  <SemanticSwatch name="primary" label="Primary" />
+  <SemanticSwatch name="secondary" label="Secondary" />
+  <SemanticSwatch name="accent" label="Accent" />
+</SemanticGrid>
+
+### Estados
+
+Los semánticos de estado usan la convención estándar de la industria (verde = éxito, rojo = error) en vez de la identidad incaica — en banca, no vale la pena romper esa expectativa universal por consistencia visual.
+
+<SemanticGrid>
+  <SemanticSwatch name="destructive" label="Destructive" />
+  <SemanticSwatch name="success" label="Success" />
+  <SemanticSwatch name="warning" label="Warning" />
+</SemanticGrid>
+
+## Notas de uso
+
+- **`--accent` depende del contexto**: es el token más variable — pensado para hover sutil o énfasis secundario (ítem de menú activo, por ejemplo).
+- **Contraste sobre amarillo/ámbar**: `warning-foreground` usa un tono oscuro en vez de blanco, porque el amarillo base es demasiado claro para texto blanco legible.
+- **Ajuste de saturación en modo oscuro**: `primary`, `ring` y `secondary` bajan un escalón (600→500, 500→400) en modo oscuro porque los tonos muy saturados pierden visibilidad sobre fondos oscuros.

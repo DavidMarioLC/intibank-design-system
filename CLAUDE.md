@@ -84,7 +84,7 @@ Herramientas instaladas:
 
 | Herramienta                            | Ubicación                                                   | Fuente                            | Estado                                                                   |
 | -------------------------------------- | ----------------------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------ |
-| Storybook MCP (`@storybook/addon-mcp`) | `.mcp.json` en la raíz, requiere Storybook corriendo en dev | Oficial (`storybookjs/mcp`)       | Instalado                                                                |
+| Storybook MCP (`@storybook/addon-mcp`) | `.mcp.json` en la raíz, requiere Storybook corriendo en dev | Oficial (`storybookjs/addon-mcp`) | Instalado                                                                |
 | tsdown skill                           | `packages/ui/.claude/skills/`                               | Oficial (`rolldown/tsdown`)       | Instalado                                                                |
 | Fumadocs skill                         | —                                                           | No hay ninguna oficial disponible | Descartado — no instalar skills de terceros no verificadas para Fumadocs |
 

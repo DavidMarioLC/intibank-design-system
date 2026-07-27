@@ -35,7 +35,7 @@ Stack: **Vitest + React Testing Library + `@storybook/test`**. No usar Chromatic
 
 ## Alcance
 
-Librería con **4-6 componentes iniciales**, pero pensada para crecer de forma progresiva — no es un alcance fijo ni definitivo. Priorizar calidad y terminación sobre cantidad en cada tanda. Componentes candidatos para la primera tanda, por el dominio (banca digital): Button, Input, Card (saldo/cuenta), Badge (estado de transacción), Dialog (confirmación), Select.
+Librería con **4-6 componentes iniciales**, pero pensada para crecer de forma progresiva — no es un alcance fijo ni definitivo. Priorizar calidad y terminación sobre cantidad en cada tanda. Componentes candidatos para la primera tanda, por el dominio (banca digital): **Button** (implementado), Input, Card (saldo/cuenta), Badge (estado de transacción), Dialog (confirmación), Select.
 
 No quitar piezas del stack completo para "simplificar" — el recorte de alcance es solo en cantidad de componentes, no en arquitectura (mantener monorepo, Fumadocs, Storybook, Changesets desde el día uno).
 

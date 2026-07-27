@@ -31,16 +31,23 @@
     "react-dom": ">=19"
   },
   "dependencies": {
-    "@base-ui/react": "^1.6.0"
+    "@base-ui/react": "^1.6.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@intibank/tsconfig": "workspace:*",
+    "@storybook/react-vite": "10.5.4",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "jsdom": "^25.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "storybook": "10.5.4",
     "tailwindcss": "^4.3.3",
     "tsdown": "^0.22.14",
     "typescript": "^5.7.0",

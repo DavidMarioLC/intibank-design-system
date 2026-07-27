@@ -1,4 +1,7 @@
-@theme {
+/* `static` evita que Tailwind elimine los shades que ningún selector del
+   monorepo referencia todavía (ej. inti-700) — tokens.css es la paleta
+   pública completa, no solo las utilidades usadas hoy. */
+@theme static {
   /* Inti (dorado/ámbar solar) — primario */
   --color-inti-50: #fffbeb;
   --color-inti-100: #fef3c7;

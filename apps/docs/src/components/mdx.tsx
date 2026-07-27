@@ -1,6 +1,7 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 import { ColorScale, SemanticGrid, SemanticSwatch } from './color-scale';
+import { Preview } from './preview';
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
@@ -8,6 +9,7 @@ export function getMDXComponents(components?: MDXComponents) {
     ColorScale,
     SemanticSwatch,
     SemanticGrid,
+    Preview,
     ...components,
   } satisfies MDXComponents;
 }

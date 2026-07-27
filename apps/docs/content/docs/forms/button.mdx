@@ -1,0 +1,58 @@
+---
+title: Button
+description: Acción principal, secundaria o destructiva
+---
+
+import { Button } from 'intibank-ui';
+
+Botón de acción — cinco variantes semánticas (`primary`, `secondary`, `destructive`, `outline`, `ghost`) y cuatro tamaños. Construido sobre `@base-ui/react/button`.
+
+## Uso
+
+```tsx
+import { Button } from 'intibank-ui';
+
+<Button variant="primary">Transferir</Button>;
+```
+
+## Variantes
+
+<Preview>
+  <Button variant="primary">Transferir</Button>
+  <Button variant="secondary">Ver detalle</Button>
+  <Button variant="destructive">Cancelar cuenta</Button>
+  <Button variant="outline">Descargar estado de cuenta</Button>
+  <Button variant="ghost">Omitir</Button>
+</Preview>
+
+- **`primary`** — la acción principal de la pantalla (confirmar una transferencia). Debería haber como mucho una por vista.
+- **`secondary`** — acción alternativa, con menos énfasis visual que `primary`.
+- **`destructive`** — acciones irreversibles o de alto riesgo (cancelar una cuenta).
+- **`outline`** / **`ghost`** — acciones terciarias, de bajo énfasis.
+
+## Tamaños
+
+<Preview>
+  <Button size="sm">Continuar</Button>
+  <Button size="default">Continuar</Button>
+  <Button size="lg">Confirmar transferencia</Button>
+  <Button size="icon" aria-label="Cerrar">
+    ×
+  </Button>
+</Preview>
+
+## Deshabilitado
+
+<Preview>
+  <Button disabled>Transferir</Button>
+</Preview>
+
+## Props
+
+| Prop        | Tipo                                                                 | Default     |
+| ----------- | --------------------------------------------------------------------- | ----------- |
+| `variant`   | `"primary" \| "secondary" \| "destructive" \| "outline" \| "ghost"` | `"primary"` |
+| `size`      | `"sm" \| "default" \| "lg" \| "icon"`                                | `"default"` |
+| `disabled`  | `boolean`                                                              | `false`     |
+
+`Button` también acepta el resto de props de `@base-ui/react/button` (`onClick`, `render`, atributos nativos de `<button>`, etc.).

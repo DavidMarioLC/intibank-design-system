@@ -7,7 +7,9 @@ import { Button } from "./button";
 describe("Button", () => {
   it("renders children as button content", () => {
     render(<Button>Continuar</Button>);
-    expect(screen.getByRole("button", { name: "Continuar" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Continuar" }),
+    ).toBeInTheDocument();
   });
 
   it("calls onClick when clicked", async () => {

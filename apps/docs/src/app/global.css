@@ -1,8 +1,8 @@
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
-@import 'intibank-ui/styles/tokens.css';
-@import 'intibank-ui/styles/semantic.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "intibank-ui/styles/tokens.css";
+@import "intibank-ui/styles/semantic.css";
 
 /* packages/ui vive fuera de apps/docs y solo se alcanza vía el symlink
    de node_modules — Tailwind excluye node_modules del auto-detect, así que

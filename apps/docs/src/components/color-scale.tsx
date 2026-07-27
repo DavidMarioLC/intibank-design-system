@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 
@@ -8,7 +8,9 @@ function useResolvedColor(varName: string) {
   const [hex, setHex] = useState<string | null>(null);
 
   useEffect(() => {
-    const value = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    const value = getComputedStyle(document.documentElement)
+      .getPropertyValue(varName)
+      .trim();
     setHex(value || null);
   }, [varName]);
 
@@ -23,7 +25,7 @@ function Swatch({ varName, label }: { varName: string; label: string }) {
       <div className="h-14 w-full" style={{ background: `var(${varName})` }} />
       <div className="flex flex-col gap-0.5 bg-card px-2 py-1.5 text-xs">
         <span className="font-medium text-card-foreground">{label}</span>
-        <span className="font-mono text-muted-foreground">{hex ?? '—'}</span>
+        <span className="font-mono text-muted-foreground">{hex ?? "—"}</span>
       </div>
     </div>
   );
@@ -43,7 +45,13 @@ export function ColorScale({ name }: { name: string }) {
   );
 }
 
-export function SemanticSwatch({ name, label }: { name: string; label: string }) {
+export function SemanticSwatch({
+  name,
+  label,
+}: {
+  name: string;
+  label: string;
+}) {
   const bgVar = `--${name}`;
   const fgVar = `--${name}-foreground`;
   const hasForeground = useResolvedColor(fgVar) !== null;
@@ -57,13 +65,13 @@ export function SemanticSwatch({ name, label }: { name: string; label: string })
           color: hasForeground ? `var(${fgVar})` : undefined,
         }}
       >
-        {hasForeground ? 'Aa' : null}
+        {hasForeground ? "Aa" : null}
       </div>
       <div className="flex flex-col gap-0.5 bg-card px-2 py-1.5 text-xs">
         <span className="font-medium text-card-foreground">{label}</span>
         <span className="font-mono text-muted-foreground">
           {bgVar}
-          {hasForeground ? ` / ${fgVar}` : ''}
+          {hasForeground ? ` / ${fgVar}` : ""}
         </span>
       </div>
     </div>

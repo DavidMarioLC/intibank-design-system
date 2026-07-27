@@ -9,7 +9,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "test": "turbo run test",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint && pnpm format:check",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "changeset": "changeset"

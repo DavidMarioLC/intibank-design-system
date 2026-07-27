@@ -1,0 +1,61 @@
+@theme {
+  /* Inti (dorado/ámbar solar) — primario */
+  --color-inti-50: #fffbeb;
+  --color-inti-100: #fef3c7;
+  --color-inti-200: #fde68a;
+  --color-inti-300: #fcd34d;
+  --color-inti-400: #fbbf24;
+  --color-inti-500: #f59e0b;
+  --color-inti-600: #d97706;
+  --color-inti-700: #b45309;
+  --color-inti-800: #92400e;
+  --color-inti-900: #78350f;
+  --color-inti-950: #451a03;
+
+  /* Terracota (cerámica/textiles andinos) — secundario */
+  --color-terracota-50: #fef4ee;
+  --color-terracota-100: #fce6d4;
+  --color-terracota-200: #f8caa8;
+  --color-terracota-300: #f3a771;
+  --color-terracota-400: #ec7d3f;
+  --color-terracota-500: #de5c22;
+  --color-terracota-600: #c04517;
+  --color-terracota-700: #9a3412;
+  --color-terracota-800: #7c2d12;
+  --color-terracota-900: #672a14;
+  --color-terracota-950: #391207;
+
+  /* Noche (índigo profundo) — anclaje / confianza */
+  --color-noche-50: #f1f1fb;
+  --color-noche-100: #e3e3f6;
+  --color-noche-200: #c7c8ec;
+  --color-noche-300: #a3a3de;
+  --color-noche-400: #7a78cb;
+  --color-noche-500: #5b57b8;
+  --color-noche-600: #46409e;
+  --color-noche-700: #363080;
+  --color-noche-800: #2a2563;
+  --color-noche-900: #1e1b4b;
+  --color-noche-950: #0f0e2e;
+
+  /* Arena (neutros cálidos) */
+  --color-arena-50: #fafaf9;
+  --color-arena-100: #f5f4f2;
+  --color-arena-200: #e7e4e0;
+  --color-arena-300: #d3cec7;
+  --color-arena-400: #a8a099;
+  --color-arena-500: #7d766e;
+  --color-arena-600: #5e5850;
+  --color-arena-700: #453f39;
+  --color-arena-800: #2e2a26;
+  --color-arena-900: #1c1a17;
+  --color-arena-950: #0f0d0b;
+
+  /* Semánticos base (convención estándar, sin tematizar) */
+  --color-success-500: #16a34a;
+  --color-success-600: #15803d;
+  --color-error-500: #dc2626;
+  --color-error-600: #b91c1c;
+  --color-warning-500: #eab308;
+  --color-warning-600: #ca8a04;
+}

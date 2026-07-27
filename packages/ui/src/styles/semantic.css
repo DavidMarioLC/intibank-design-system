@@ -1,0 +1,78 @@
+@layer base {
+  :root {
+    /* Base surfaces */
+    --background: var(--color-arena-50);
+    --foreground: var(--color-noche-900);
+
+    --card: #ffffff;
+    --card-foreground: var(--color-noche-900);
+
+    --popover: #ffffff;
+    --popover-foreground: var(--color-noche-900);
+
+    /* Bordes y controles */
+    --border: var(--color-arena-200);
+    --input: var(--color-arena-300);
+    --ring: var(--color-inti-500);
+
+    /* Muted (fondos sutiles, texto secundario) */
+    --muted: var(--color-arena-100);
+    --muted-foreground: var(--color-arena-600);
+
+    /* Marca */
+    --primary: var(--color-inti-600);
+    --primary-foreground: var(--color-arena-50);
+
+    --secondary: var(--color-terracota-600);
+    --secondary-foreground: var(--color-arena-50);
+
+    --accent: var(--color-noche-900);
+    --accent-foreground: var(--color-arena-50);
+
+    /* Semánticos */
+    --destructive: var(--color-error-500);
+    --destructive-foreground: #ffffff;
+
+    --success: var(--color-success-500);
+    --success-foreground: #ffffff;
+
+    --warning: var(--color-warning-500);
+    --warning-foreground: var(--color-noche-900);
+  }
+
+  .dark {
+    --background: var(--color-noche-950);
+    --foreground: var(--color-arena-50);
+
+    --card: var(--color-noche-900);
+    --card-foreground: var(--color-arena-50);
+
+    --popover: var(--color-noche-900);
+    --popover-foreground: var(--color-arena-50);
+
+    --border: var(--color-noche-700);
+    --input: var(--color-noche-600);
+    --ring: var(--color-inti-400);
+
+    --muted: var(--color-noche-800);
+    --muted-foreground: var(--color-arena-400);
+
+    --primary: var(--color-inti-500);
+    --primary-foreground: var(--color-noche-950);
+
+    --secondary: var(--color-terracota-500);
+    --secondary-foreground: var(--color-noche-950);
+
+    --accent: var(--color-inti-400);
+    --accent-foreground: var(--color-noche-950);
+
+    --destructive: var(--color-error-500);
+    --destructive-foreground: #ffffff;
+
+    --success: var(--color-success-500);
+    --success-foreground: var(--color-noche-950);
+
+    --warning: var(--color-warning-500);
+    --warning-foreground: var(--color-noche-950);
+  }
+}

@@ -1,20 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 
+function subscribeNoop() {
+  return () => {};
+}
+
+function getServerSnapshot() {
+  return null;
+}
+
 function useResolvedColor(varName: string) {
-  const [hex, setHex] = useState<string | null>(null);
-
-  useEffect(() => {
-    const value = getComputedStyle(document.documentElement)
-      .getPropertyValue(varName)
-      .trim();
-    setHex(value || null);
-  }, [varName]);
-
-  return hex;
+  return useSyncExternalStore(
+    subscribeNoop,
+    () =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue(varName)
+        .trim() || null,
+    getServerSnapshot,
+  );
 }
 
 function Swatch({ varName, label }: { varName: string; label: string }) {

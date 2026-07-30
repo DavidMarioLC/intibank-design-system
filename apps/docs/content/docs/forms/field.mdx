@@ -1,0 +1,115 @@
+---
+title: Field
+description: Label, descripción y mensaje de error para un control de formulario
+---
+
+import { Field, Input } from 'intibank-ui';
+
+`Field` es la envoltura de cualquier control de formulario: conecta el label con el control, expone el texto de ayuda vía `aria-describedby` y marca el control como `aria-invalid` cuando la validación falla. Construido sobre `@base-ui/react/field`.
+
+No renderiza ningún control por sí mismo — se compone con [`Input`](/docs/forms/input) y, más adelante, con el resto de controles de la librería.
+
+## Anatomía
+
+```tsx
+import { Field, Input } from 'intibank-ui';
+
+<Field.Root name="monto">
+  <Field.Label>Monto a transferir</Field.Label>
+  <Input placeholder="S/ 0.00" />
+  <Field.Description>Máximo S/ 5,000 por operación</Field.Description>
+  <Field.Error />
+</Field.Root>;
+```
+
+| Parte               | Renderiza | Rol                                                                  |
+| ------------------- | --------- | -------------------------------------------------------------------- |
+| `Field.Root`        | `<div>`   | Agrupa las partes y mantiene el estado del campo (válido, tocado, …) |
+| `Field.Label`       | `<label>` | Se asocia al control automáticamente, sin `htmlFor` manual           |
+| `Field.Description` | `<p>`     | Texto de ayuda, expuesto como descripción accesible del control      |
+| `Field.Error`       | `<div>`   | Mensaje de error; solo aparece cuando el campo es inválido           |
+
+## Con descripción
+
+<Preview>
+  <Field.Root name="cci" className="w-full max-w-sm">
+    <Field.Label>Código CCI</Field.Label>
+    <Input placeholder="002 191 003456789012 34" />
+    <Field.Description>Son 20 dígitos, los encuentras en tu estado de cuenta.</Field.Description>
+  </Field.Root>
+</Preview>
+
+Usar la descripción para lo que ayuda a completar el campo (formato, límites, dónde encontrar el dato), no para repetir el label.
+
+## Deshabilitado
+
+`disabled` en `Field.Root` tiene precedencia sobre el control y además atenúa el label.
+
+<Preview>
+  <Field.Root name="cuenta" disabled className="w-full max-w-sm">
+    <Field.Label>Cuenta de origen</Field.Label>
+    <Input defaultValue="191-3456789-0-12" />
+    <Field.Description>La cuenta de origen no se puede cambiar.</Field.Description>
+  </Field.Root>
+</Preview>
+
+## Validación
+
+`Field.Root` acepta una función `validate` y un `validationMode` que decide cuándo correrla (`onSubmit` por defecto, `onBlur`, `onChange`). `Field.Error` toma el mensaje que devuelve `validate` — sin children no hay que pasarle nada.
+
+```tsx
+<Field.Root
+  name="monto"
+  validationMode="onBlur"
+  validate={(value) =>
+    Number(value) > 5000 ? 'El monto excede tu límite diario' : null
+  }
+>
+  <Field.Label>Monto a transferir</Field.Label>
+  <Input placeholder="S/ 0.00" />
+  <Field.Error />
+</Field.Root>
+```
+
+Al fallar, el control queda con `aria-invalid="true"` y el `Input` toma el borde rojo del estado inválido:
+
+<Preview>
+  <Field.Root name="monto" className="w-full max-w-sm">
+    <Field.Label>Monto a transferir</Field.Label>
+    <Input aria-invalid defaultValue="9000" />
+    <div className="text-sm text-destructive">El monto excede tu límite diario</div>
+  </Field.Root>
+</Preview>
+
+<Callout title="En banca, el error va junto al campo">
+  No resumir errores de validación solo al final del formulario. En una
+  transferencia el usuario corrige el campo donde está mirando; un mensaje
+  lejano obliga a reconstruir qué salió mal.
+</Callout>
+
+Para validación nativa del navegador (`required`, `type="email"`, `pattern`, `min`), `Field.Error` muestra el mensaje del `ValidityState` sin necesidad de `validate`. Con `match` se puede acotar a un tipo de error concreto:
+
+```tsx
+<Field.Error match="valueMissing">Ingresa un monto.</Field.Error>
+```
+
+## Props
+
+### `Field.Root`
+
+| Prop                     | Tipo                                                  | Default      |
+| ------------------------ | ----------------------------------------------------- | ------------ |
+| `name`                   | `string`                                              | —            |
+| `disabled`               | `boolean`                                             | `false`      |
+| `invalid`                | `boolean`                                             | —            |
+| `validate`               | `(value, formValues) => string \| string[] \| null`   | —            |
+| `validationMode`         | `"onSubmit" \| "onBlur" \| "onChange"`                | `"onSubmit"` |
+| `validationDebounceTime` | `number`                                              | `0`          |
+
+### `Field.Error`
+
+| Prop    | Tipo                            | Default |
+| ------- | ------------------------------- | ------- |
+| `match` | `boolean \| keyof ValidityState` | —       |
+
+`Field.Label` y `Field.Description` aceptan las props nativas de `<label>` y `<div>` respectivamente.

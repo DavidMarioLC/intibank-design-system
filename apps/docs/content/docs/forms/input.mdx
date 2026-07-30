@@ -1,0 +1,89 @@
+---
+title: Input
+description: Campo de texto para formularios
+---
+
+import { Field, Input } from 'intibank-ui';
+
+Campo de texto — tres tamaños y estados de foco, deshabilitado e inválido. Construido sobre `@base-ui/react/input`.
+
+Para el label, la descripción de ayuda y el mensaje de error, componer con [`Field`](/docs/forms/field) — `Input` por sí solo es únicamente el control.
+
+## Uso
+
+```tsx
+import { Input } from 'intibank-ui';
+
+<Input placeholder="Número de cuenta" />;
+```
+
+## Tamaños
+
+<Preview>
+  <div className="flex w-full max-w-sm flex-col gap-3">
+    <Input size="sm" placeholder="Buscar movimiento" />
+    <Input size="default" placeholder="Número de cuenta" />
+    <Input size="lg" placeholder="S/ 0.00" />
+  </div>
+</Preview>
+
+- **`sm`** — controles densos (barra de búsqueda dentro de una lista de movimientos).
+- **`default`** — el tamaño de todo formulario normal.
+- **`lg`** — campos protagonistas de una pantalla, como el monto de una transferencia.
+
+<Callout>
+  `size` es la variante visual del design system, no el atributo nativo
+  `size` de `<input>` (que espera un número). Ese atributo no está expuesto.
+</Callout>
+
+## Estados
+
+<Preview>
+  <div className="flex w-full max-w-sm flex-col gap-3">
+    <Input placeholder="Número de cuenta" />
+    <Input disabled defaultValue="191-3456789-0-12" />
+    <Input aria-invalid defaultValue="191-000" />
+  </div>
+</Preview>
+
+El borde rojo del estado inválido se activa con `aria-invalid` o, cuando el input vive dentro de un `Field.Root`, automáticamente vía el `data-invalid` que Base UI propaga al fallar la validación.
+
+## Con label y descripción
+
+<Preview>
+  <Field.Root name="monto" className="w-full max-w-sm">
+    <Field.Label>Monto a transferir</Field.Label>
+    <Input placeholder="S/ 0.00" />
+    <Field.Description>Máximo S/ 5,000 por operación</Field.Description>
+  </Field.Root>
+</Preview>
+
+```tsx
+<Field.Root name="monto">
+  <Field.Label>Monto a transferir</Field.Label>
+  <Input placeholder="S/ 0.00" />
+  <Field.Description>Máximo S/ 5,000 por operación</Field.Description>
+</Field.Root>
+```
+
+## Controlado
+
+`onValueChange` entrega el valor ya extraído del evento, así que no hace falta leer `event.target.value`.
+
+```tsx
+const [monto, setMonto] = useState('');
+
+<Input value={monto} onValueChange={setMonto} placeholder="S/ 0.00" />;
+```
+
+## Props
+
+| Prop            | Tipo                              | Default     |
+| --------------- | --------------------------------- | ----------- |
+| `size`          | `"sm" \| "default" \| "lg"`       | `"default"` |
+| `value`         | `string`                          | —           |
+| `defaultValue`  | `string`                          | —           |
+| `onValueChange` | `(value: string, details) => void` | —           |
+| `disabled`      | `boolean`                         | `false`     |
+
+`Input` también acepta el resto de props de `@base-ui/react/input` (`placeholder`, `type`, `required`, `render`, atributos nativos de `<input>`, etc.).

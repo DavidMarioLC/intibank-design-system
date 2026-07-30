@@ -1,4 +1,4 @@
 {
   "title": "Forms",
-  "pages": ["button"]
+  "pages": ["button", "field", "input"]
 }

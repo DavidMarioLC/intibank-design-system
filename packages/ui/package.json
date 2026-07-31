@@ -3,6 +3,29 @@
   "version": "0.2.0",
   "private": false,
   "description": "Component library for Intibank, a fictional digital bank design system.",
+  "license": "MIT",
+  "author": "David Mario LC <davidmariolc.dev@gmail.com>",
+  "homepage": "https://github.com/DavidMarioLC/intibank-design-system#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidMarioLC/intibank-design-system.git",
+    "directory": "packages/ui"
+  },
+  "bugs": {
+    "url": "https://github.com/DavidMarioLC/intibank-design-system/issues"
+  },
+  "keywords": [
+    "design-system",
+    "react",
+    "components",
+    "ui",
+    "tailwindcss",
+    "base-ui",
+    "design-tokens"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -23,7 +46,9 @@
   },
   "files": [
     "dist",
-    "src/styles"
+    "src/styles",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsdown",

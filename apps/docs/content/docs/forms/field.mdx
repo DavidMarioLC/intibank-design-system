@@ -77,7 +77,7 @@ Al fallar, el control queda con `aria-invalid="true"` y el `Input` toma el borde
   <Field.Root name="monto" className="w-full max-w-sm">
     <Field.Label>Monto a transferir</Field.Label>
     <Input aria-invalid defaultValue="9000" />
-    <div className="text-sm text-destructive">El monto excede tu límite diario</div>
+    <Field.Error match>El monto excede tu límite diario</Field.Error>
   </Field.Root>
 </Preview>
 

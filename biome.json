@@ -12,7 +12,8 @@
       "!**/.next",
       "!**/storybook-static",
       "!**/.turbo",
-      "!**/*.mdx"
+      "!**/*.mdx",
+      "!**/.claude/settings.local.json"
     ]
   },
   "formatter": {

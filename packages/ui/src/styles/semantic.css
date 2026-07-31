@@ -29,50 +29,73 @@
     --accent: var(--color-noche-900);
     --accent-foreground: var(--color-arena-50);
 
-    /* Semánticos */
+    /* Semánticos.
+       Cada uno viene en dos sabores porque los roles piden lo contrario:
+       el par `X` / `X-foreground` es una SUPERFICIE (fondo de botón, badge)
+       y se mide contra su propio texto; `X-text` es el color como TEXTO o
+       ícono sobre `background` y se mide contra el fondo de la página.
+       Un solo valor no puede cumplir ambos: al aclararlo para que se lea
+       sobre el fondo, deja de contrastar con el blanco que lleva encima. */
     --destructive: var(--color-error-500);
     --destructive-foreground: #ffffff;
+    --destructive-text: var(--color-error-600);
 
-    --success: var(--color-success-500);
+    /* success-500 con blanco da 3.3:1 — el verde saturado necesita el 600. */
+    --success: var(--color-success-600);
     --success-foreground: #ffffff;
+    --success-text: var(--color-success-600);
 
     --warning: var(--color-warning-500);
     --warning-foreground: var(--color-noche-900);
+    --warning-text: var(--color-warning-700);
   }
 
+  /* El modo oscuro construye sus superficies sobre `piedra`, no sobre
+     `noche`: `noche` sigue siendo el índigo de marca, pero como fondo se
+     lee morado y le compite al dorado. Las superficies quedan casi neutras
+     y la identidad la carga `primary`. Los tonos saturados suben un escalón
+     respecto al modo claro para no perder visibilidad sobre fondo oscuro. */
   .dark {
-    --background: var(--color-noche-950);
-    --foreground: var(--color-arena-50);
+    --background: var(--color-piedra-950);
+    --foreground: var(--color-piedra-50);
 
-    --card: var(--color-noche-900);
-    --card-foreground: var(--color-arena-50);
+    --card: var(--color-piedra-900);
+    --card-foreground: var(--color-piedra-50);
 
-    --popover: var(--color-noche-900);
-    --popover-foreground: var(--color-arena-50);
+    --popover: var(--color-piedra-900);
+    --popover-foreground: var(--color-piedra-50);
 
-    --border: var(--color-noche-700);
-    --input: var(--color-noche-600);
+    --border: var(--color-piedra-700);
+    --input: var(--color-piedra-600);
     --ring: var(--color-inti-400);
 
-    --muted: var(--color-noche-800);
-    --muted-foreground: var(--color-arena-400);
+    --muted: var(--color-piedra-800);
+    /* piedra-400 daría 3.98:1 sobre el fondo — no alcanza para texto. */
+    --muted-foreground: var(--color-piedra-300);
 
     --primary: var(--color-inti-500);
-    --primary-foreground: var(--color-noche-950);
+    --primary-foreground: var(--color-piedra-950);
 
     --secondary: var(--color-terracota-500);
-    --secondary-foreground: var(--color-noche-950);
+    --secondary-foreground: var(--color-piedra-950);
 
     --accent: var(--color-inti-400);
-    --accent-foreground: var(--color-noche-950);
+    --accent-foreground: var(--color-piedra-950);
 
+    /* Las superficies NO se aclaran en modo oscuro: un botón destructivo en
+       error-400 queda rosa pastel y se lee menos grave que el secundario, o
+       sea al revés de lo que la jerarquía de riesgo necesita. El que sube un
+       escalón es `X-text`, que sí se mide contra el fondo oscuro. */
     --destructive: var(--color-error-500);
     --destructive-foreground: #ffffff;
+    --destructive-text: var(--color-error-400);
 
-    --success: var(--color-success-500);
-    --success-foreground: var(--color-noche-950);
+    --success: var(--color-success-600);
+    --success-foreground: #ffffff;
+    --success-text: var(--color-success-400);
 
     --warning: var(--color-warning-500);
-    --warning-foreground: var(--color-noche-950);
+    --warning-foreground: var(--color-noche-900);
+    --warning-text: var(--color-warning-400);
   }
 }

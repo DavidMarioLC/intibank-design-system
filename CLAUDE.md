@@ -87,8 +87,11 @@ Herramientas instaladas:
 | Herramienta                            | Ubicación                                                   | Fuente                            | Estado                                                                   |
 | -------------------------------------- | ----------------------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------ |
 | Storybook MCP (`@storybook/addon-mcp`) | `.mcp.json` en la raíz, requiere Storybook corriendo en dev | Oficial (`storybookjs/addon-mcp`) | Instalado                                                                |
+| Chrome DevTools MCP                    | `.mcp.json` en la raíz, requiere el dev server corriendo    | Oficial (`ChromeDevTools/chrome-devtools-mcp`) | Instalado — verificación visual de `apps/docs` (screenshots, toggle de tema, computed styles) |
 | tsdown skill                           | `packages/ui/.claude/skills/`                               | Oficial (`rolldown/tsdown`)       | Instalado                                                                |
 | Fumadocs skill                         | —                                                           | No hay ninguna oficial disponible | Descartado — no instalar skills de terceros no verificadas para Fumadocs |
+
+El MCP de Chrome DevTools **no contradice** la regla de "no usar Playwright" de la sección de Testing: esa regla es sobre la estrategia de testing del proyecto (E2E en CI, overkill para esta librería). El MCP es tooling de desarrollo — vive en `.mcp.json`, no entra a `package.json`, ni a CI, ni al paquete publicado. No agregar navegadores headless como dependencia del repo.
 
 ## Documentación de referencia
 

@@ -41,6 +41,25 @@
   --color-noche-900: #1e1b4b;
   --color-noche-950: #0f0e2e;
 
+  /* Piedra (neutros fríos, dejo índigo) — superficies del modo oscuro.
+     `noche` es color de marca: saturado de más para usarse como fondo (un
+     bloque de noche-900 se lee como una losa morada, no como una superficie).
+     `piedra` es esa misma familia llevada a ~10% de saturación: se percibe
+     como neutro, pero emparenta con el índigo en vez de con un gris puro.
+     Rampa comprimida en el extremo oscuro a propósito — 950→600 son los
+     escalones de superficie y ahí los saltos tienen que ser finos. */
+  --color-piedra-50: #f4f4f7;
+  --color-piedra-100: #e4e4eb;
+  --color-piedra-200: #c2c2d1;
+  --color-piedra-300: #9494ad;
+  --color-piedra-400: #6e6e8f;
+  --color-piedra-500: #4d4d6b;
+  --color-piedra-600: #33334a;
+  --color-piedra-700: #292938;
+  --color-piedra-800: #1c1c29;
+  --color-piedra-900: #14141f;
+  --color-piedra-950: #0c0c12;
+
   /* Arena (neutros cálidos) */
   --color-arena-50: #fafaf9;
   --color-arena-100: #f5f4f2;
@@ -54,11 +73,20 @@
   --color-arena-900: #1c1a17;
   --color-arena-950: #0f0d0b;
 
-  /* Semánticos base (convención estándar, sin tematizar) */
+  /* Semánticos base (convención estándar, sin tematizar).
+     El escalón 400 existe para el modo oscuro: sobre fondo casi negro el 500
+     no llega a 4.5:1 (error-500 da 4.04:1), así que el modo oscuro sube un
+     escalón en luminosidad igual que hacen los tonos de marca. */
+  --color-success-400: #4ade80;
   --color-success-500: #16a34a;
   --color-success-600: #15803d;
+  --color-error-400: #f87171;
   --color-error-500: #dc2626;
   --color-error-600: #b91c1c;
+  --color-warning-400: #facc15;
   --color-warning-500: #eab308;
   --color-warning-600: #ca8a04;
+  /* El amarillo no funciona como texto sobre fondo claro a ningún escalón
+     por debajo del 700: warning-600 sobre `background` da 2.81:1. */
+  --color-warning-700: #a16207;
 }

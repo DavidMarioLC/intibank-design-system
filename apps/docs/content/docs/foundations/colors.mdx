@@ -26,9 +26,19 @@ La paleta base nunca se referencia directo en componentes — solo alimenta la c
 
 <ColorScale name="noche" />
 
+`noche` es color de marca, no una rampa de superficies: a esta saturación un fondo grande se lee como una losa morada y le compite al dorado. Para las superficies del modo oscuro está `piedra`.
+
+### Piedra — neutros fríos (superficies del modo oscuro)
+
+<ColorScale name="piedra" />
+
+La misma familia que `noche` llevada a ~10% de saturación: se percibe como neutro, pero emparenta con el índigo en vez de con un gris puro. La rampa está comprimida en el extremo oscuro a propósito — `950`→`600` son los escalones de superficie, y ahí los saltos tienen que ser finos.
+
 ### Arena — neutros cálidos
 
 <ColorScale name="arena" />
+
+El modo claro se queda cálido (`arena`) y el oscuro frío (`piedra`): adobe bajo el sol de día, piedra andina de noche.
 
 ## Variables semánticas
 
@@ -64,14 +74,18 @@ La capa que realmente consumen los componentes (`bg-primary`, `text-foreground`,
 
 Los semánticos de estado usan la convención estándar de la industria (verde = éxito, rojo = error) en vez de la identidad incaica — en banca, no vale la pena romper esa expectativa universal por consistencia visual.
 
+Cada uno viene en dos sabores, porque los roles piden lo contrario. El par `X` / `X-foreground` es una **superficie** (fondo de botón o badge) y se mide contra el texto que lleva encima. `X-text` es el color como **texto o ícono** sobre `background`, y se mide contra el fondo de la página. Un solo valor no puede cumplir ambos: al aclarar el rojo para que se lea sobre el fondo oscuro, deja de contrastar con el blanco que lleva encima.
+
 <SemanticGrid>
   <SemanticSwatch name="destructive" label="Destructive" />
   <SemanticSwatch name="success" label="Success" />
   <SemanticSwatch name="warning" label="Warning" />
 </SemanticGrid>
 
+En la práctica: `bg-destructive` para superficies, `text-destructive-text` para mensajes de error. Los bordes (como el del input inválido) usan la superficie — WCAG pide 3:1 para elementos no textuales, no 4.5:1.
+
 ## Notas de uso
 
 - **`--accent` depende del contexto**: es el token más variable — pensado para hover sutil o énfasis secundario (ítem de menú activo, por ejemplo).
 - **Contraste sobre amarillo/ámbar**: `warning-foreground` usa un tono oscuro en vez de blanco, porque el amarillo base es demasiado claro para texto blanco legible.
-- **Ajuste de saturación en modo oscuro**: `primary`, `ring` y `secondary` bajan un escalón (600→500, 500→400) en modo oscuro porque los tonos muy saturados pierden visibilidad sobre fondos oscuros.
+- **Ajuste de saturación en modo oscuro**: `primary`, `ring`, `secondary` y los semánticos de estado bajan un escalón (600→500, 500→400) en modo oscuro porque los tonos muy saturados pierden visibilidad sobre fondos oscuros. Cuando un token se aclara así, su `-foreground` pasa de blanco a un tono oscuro — es el caso de `destructive` y `success` en modo oscuro.

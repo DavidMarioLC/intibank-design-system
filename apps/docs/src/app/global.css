@@ -38,12 +38,64 @@
 
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-text: var(--destructive-text);
 
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-text: var(--success-text);
 
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-warning-text: var(--warning-text);
+}
+
+/* Fumadocs pinta el chrome del sitio (sidebar, prosa, TOC) con su propia
+   escala `--color-fd-*`, que el preset `neutral` deja en grises puros. Sin
+   este puente el sitio y los componentes que documenta son dos paletas
+   distintas, y cada bloque <Preview> se lee como un parche pegado encima.
+   El preset se sigue importando arriba: define todas las vars, incluidas las
+   que acá no se remapean. Va sin @layer y después del import a propósito —
+   el `.dark` de Fumadocs tampoco está en una capa, así que solo lo gana una
+   regla posterior de la misma especificidad.
+
+   Dos mapeos que no son obvios: en Fumadocs `secondary` y `accent` son
+   *superficies* (fondo del sidebar, hover de un ítem), no colores de marca.
+   Mapearlas a los `--secondary` / `--accent` de Intibank pintaría el sidebar
+   de terracota y los hovers de dorado; van a `--muted`, que es el rol
+   equivalente en la convención shadcn. */
+:root,
+.dark {
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+
+  --color-fd-border: var(--border);
+  --color-fd-ring: var(--ring);
+
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+
+  --color-fd-secondary: var(--muted);
+  --color-fd-secondary-foreground: var(--foreground);
+
+  --color-fd-accent: var(--muted);
+  --color-fd-accent-foreground: var(--foreground);
+}
+
+/* `neutral.css` reaplica grises al sidebar con un selector de mayor
+   especificidad (`.dark #nd-sidebar`), así que hay que igualarlo. */
+.dark #nd-sidebar {
+  --color-fd-muted: var(--muted);
+  --color-fd-secondary: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
 }
 
 html {

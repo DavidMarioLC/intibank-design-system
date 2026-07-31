@@ -63,11 +63,15 @@ export interface FieldErrorProps
   className?: string;
 }
 
+/* `text-destructive-text`, no `text-destructive`: este último es el rojo de
+   superficie (fondo del Button destructivo) y sobre el fondo del modo oscuro
+   se queda en 4.04:1. El mensaje de error es justo el texto que más importa
+   que se lea. Ver la nota de roles en semantic.css. */
 const FieldError = React.forwardRef<HTMLDivElement, FieldErrorProps>(
   ({ className, ...props }, ref) => (
     <BaseField.Error
       ref={ref}
-      className={cn("text-sm text-destructive", className)}
+      className={cn("text-sm text-destructive-text", className)}
       {...props}
     />
   ),

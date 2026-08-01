@@ -134,6 +134,9 @@ La capa que realmente consumen los componentes (`bg-primary`, `text-foreground`,
   --popover: #ffffff;
   --popover-foreground: var(--color-noche-900);
 
+  /* Velo detrás de un Dialog — ver "Overlay" abajo */
+  --overlay: color-mix(in srgb, var(--color-noche-950) 55%, transparent);
+
   /* Bordes y controles */
   --border: var(--color-arena-200);
   --input: var(--color-arena-300);
@@ -184,6 +187,8 @@ deliberado — adobe bajo el sol de día, piedra andina de noche.
 
   --popover: var(--color-piedra-900);
   --popover-foreground: var(--color-piedra-50);
+
+  --overlay: color-mix(in srgb, var(--color-piedra-950) 70%, transparent);
 
   --border: var(--color-piedra-700);
   --input: var(--color-piedra-600);
@@ -252,4 +257,5 @@ Contraste del modo oscuro (todos AA, ≥ 4.5:1):
 - **Semánticos de estado sin tematizar**: `success`, `destructive` y `warning` usan convención universal (verde/rojo/amarillo) y no la identidad incaica — en un banco, romper esa convención por consistencia visual puede confundir al usuario.
 - **Superficie vs. texto**: cada semántico de estado viene en dos sabores porque los roles piden lo contrario. El par `X` / `X-foreground` es una **superficie** (fondo de botón, badge) y se mide contra su propio texto encima. `X-text` es el color como **texto o ícono** sobre `background` y se mide contra el fondo de la página. Un solo valor no puede cumplir ambos: al aclarar el rojo para que se lea sobre el fondo oscuro, deja de contrastar con el blanco que lleva encima. Regla práctica: `bg-destructive` para superficies, `text-destructive-text` para mensajes. Los **bordes** (input inválido) usan la superficie: WCAG pide 3:1 para elementos no textuales, no 4.5:1, y `error-500` da 4.04:1.
 - **El amarillo no sirve como texto sobre fondo claro**: ningún escalón por debajo de `warning-700` llega a 4.5:1 contra `background` en modo claro (`warning-600` da 2.81:1). Por eso `--warning-text` usa el 700 y existe ese escalón en la paleta.
-- **Integración con Tailwind v4**: estas variables semánticas se declaran en `@layer base`, no en `@theme` (que es donde va la paleta base generadora de utilidades). Para usarlas como utilidades nativas de Tailwind (`bg-primary`, `text-foreground`), se remapean también dentro de un bloque `@theme inline` apuntando a estas mismas variables — el mismo patrón que usa la plantilla oficial de shadcn/ui para Tailwind v4.
+- **Overlay**: `--overlay` es el velo que atenúa la página detrás de un `Dialog`. Es el único token semántico que no es un color opaco sino un `color-mix` contra `transparent`, y el único sin `-foreground`: nada se apoya encima, su trabajo es dejar ver lo de atrás atenuado. Sale de `noche-950` en modo claro (el oscurecimiento tira al índigo de marca en vez de apagar la escena a gris) y de `piedra-950` en oscuro, donde además sube de 55% a 70% — sobre un fondo ya oscuro, un velo tenue no separa el popup de la página. Mezcla en `srgb` a propósito: se busca un fundido de alfa limpio, no una interpolación perceptual que le mueva el tono.
+- **Integración con Tailwind v4**: estas variables semánticas se declaran en `@layer base`, no en `@theme` (que es donde va la paleta base generadora de utilidades). Para usarlas como utilidades nativas de Tailwind (`bg-primary`, `text-foreground`), se remapean dentro de un bloque `@theme inline` apuntando a estas mismas variables — el mismo patrón que usa la plantilla oficial de shadcn/ui para Tailwind v4. Ese bloque vive en `packages/ui/src/styles/semantic.css`, junto a las variables que mapea, y **no** se repite en el CSS de cada app: las clases que tiene que generar son las que escriben los componentes de la librería, así que quien instala `intibank-ui` desde npm necesita que viaje dentro del paquete. Si estuviera solo en las apps del monorepo, un consumidor externo importaría los tokens, vería las variables definidas y aun así renderizaría todo sin estilos.

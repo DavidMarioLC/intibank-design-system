@@ -10,6 +10,12 @@
     --popover: #ffffff;
     --popover-foreground: var(--color-noche-900);
 
+    /* Velo que atenúa la página detrás de un Dialog. Sale de `noche` y no de
+       negro puro para que el oscurecimiento tire al índigo de marca en vez de
+       apagar la escena; `srgb` y no `oklab` porque acá se quiere un fundido de
+       alfa limpio, no una interpolación perceptual que le mueva el tono. */
+    --overlay: color-mix(in srgb, var(--color-noche-950) 55%, transparent);
+
     /* Bordes y controles */
     --border: var(--color-arena-200);
     --input: var(--color-arena-300);
@@ -65,6 +71,10 @@
     --popover: var(--color-piedra-900);
     --popover-foreground: var(--color-piedra-50);
 
+    /* Sube a 70%: sobre un fondo ya oscuro, un velo al 55% casi no separa el
+       popup de la página y el Dialog deja de leerse como una capa aparte. */
+    --overlay: color-mix(in srgb, var(--color-piedra-950) 70%, transparent);
+
     --border: var(--color-piedra-700);
     --input: var(--color-piedra-600);
     --ring: var(--color-inti-400);
@@ -98,4 +108,54 @@
     --warning-foreground: var(--color-noche-900);
     --warning-text: var(--color-warning-400);
   }
+}
+
+/* El puente que convierte cada variable semántica en una utilidad de Tailwind
+   (`--card` → `bg-card`). Vive acá y no en el CSS de cada app porque las
+   clases que necesita generar son las que escriben los componentes de esta
+   librería: sin este bloque, quien instala `intibank-ui` desde npm importa los
+   tokens, ve las variables definidas y aun así renderiza todo sin estilos,
+   porque `bg-card` no existe en su tema.
+
+   `inline` y no `@theme` a secas: así Tailwind usa el valor tal cual en la
+   utilidad en vez de reemitir la variable en `:root`, que es lo que deja que
+   `.dark` reasigne `--card` y las utilidades ya generadas cambien con él. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-overlay: var(--overlay);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-text: var(--destructive-text);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-text: var(--success-text);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-text: var(--warning-text);
 }

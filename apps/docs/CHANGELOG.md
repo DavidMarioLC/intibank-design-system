@@ -1,5 +1,12 @@
 # docs
 
+## 0.0.10
+
+### Patch Changes
+
+- Updated dependencies [1fcaa16]
+  - intibank-ui@0.3.0
+
 ## 0.0.9
 
 ### Patch Changes

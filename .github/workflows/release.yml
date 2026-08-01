@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+# Nunca dos publish en paralelo: sin cancelación, se encolan.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write # commit de versión y tags
+  pull-requests: write # PR de "Version Packages"
+  id-token: write # OIDC para npm Trusted Publishing + provenance
+
+jobs:
+  release:
+    name: Version o publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # dist/ tiene que existir antes de publicar: el tarball se arma desde el working tree.
+      - run: pnpm build
+
+      # Con changesets pendientes abre/actualiza el PR de versión.
+      # Sin changesets pendientes (o sea, al mergear ese PR), publica a npm.
+      - uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: pnpm changeset publish
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

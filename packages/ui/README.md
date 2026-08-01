@@ -24,11 +24,13 @@ Los componentes traen sus estilos vía Tailwind CSS v4. Importá los tokens en t
 @import "intibank-ui/styles/semantic.css";
 ```
 
-Si consumís el paquete desde un monorepo con symlinks, Tailwind necesita que le señales el código de la librería para generar sus clases:
+Tailwind v4 no escanea `node_modules` al detectar clases, así que hace falta señalarle el código de la librería para que genere las suyas. Esto aplica a **cualquier** consumidor, tanto instalando desde npm como enlazando el paquete desde un monorepo:
 
 ```css
 @source "../node_modules/intibank-ui/dist";
 ```
+
+Ajustá la ruta relativa según dónde viva tu CSS de entrada. Si los componentes se renderizan sin estilos, casi siempre es este `@source` faltante.
 
 Después, los componentes se usan directo:
 
@@ -64,8 +66,10 @@ export function Transferencia() {
 | `Button` | Acciones. Variantes `primary`, `secondary`, `destructive`, `outline`, `ghost`; tamaños `sm`, `default`, `lg`, `icon`. |
 | `Field` | Envoltura de formularios: `Field.Root`, `Field.Label`, `Field.Description`, `Field.Error`. Conecta label, descripción accesible y estado de validación al control. |
 | `Input` | Campo de texto. Tamaños `sm`, `default`, `lg`; estados deshabilitado e inválido. |
+| `Card` | Superficie de contenido: `Card.Root`, `Card.Header`, `Card.Title`, `Card.Description`, `Card.Content`, `Card.Footer`. Cada pieza acepta `render` para decidir su tag (el nivel de heading de `Card.Title` lo elige la página, no el componente). |
+| `Badge` | Estado de una transacción u operación. Variantes `neutral`, `primary`, `secondary`, `success`, `warning`, `destructive`, `outline`; tamaños `sm`, `default`. |
 
-Los controles se componen dentro de `Field` y no reimplementan label ni mensajes de error. Cada componente exporta también sus variantes (`buttonVariants`, `inputVariants`) por si necesitás las clases sin el componente.
+Los controles se componen dentro de `Field` y no reimplementan label ni mensajes de error. Cada componente exporta también sus variantes (`buttonVariants`, `inputVariants`, `badgeVariants`) por si necesitás las clases sin el componente.
 
 ## Design tokens
 

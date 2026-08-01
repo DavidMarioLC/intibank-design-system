@@ -35,9 +35,11 @@ Stack: **Vitest + React Testing Library + `@storybook/test`**. No usar Chromatic
 
 ## Alcance
 
-Librería con **4-6 componentes iniciales**, pero pensada para crecer de forma progresiva — no es un alcance fijo ni definitivo. Priorizar calidad y terminación sobre cantidad en cada tanda. Componentes candidatos para la primera tanda, por el dominio (banca digital): **Button** (implementado), **Field** (implementado), **Input** (implementado), Card (saldo/cuenta), Badge (estado de transacción), Dialog (confirmación), Select.
+Librería con **4-6 componentes iniciales**, pero pensada para crecer de forma progresiva — no es un alcance fijo ni definitivo. Priorizar calidad y terminación sobre cantidad en cada tanda. Estado por el dominio (banca digital): **Button**, **Field**, **Input**, **Card** (saldo/cuenta) y **Badge** (estado de transacción) implementados; pendientes Dialog (confirmación) y Select.
 
 `Field` es la envoltura de formularios (label + descripción + error + estado de validación, sobre `@base-ui/react/field`); los controles (`Input`, y más adelante `Select`) se componen dentro de él y no reimplementan label ni mensajes de error.
+
+`Card` y `Badge` no envuelven una primitiva de Base UI (no hay comportamiento que encapsular), pero sí siguen sus convenciones de API: `Card` expone `render` en cada pieza vía `useRender`, para que el nivel de heading de `Card.Title` y el tag de `Card.Root` los decida la página.
 
 No quitar piezas del stack completo para "simplificar" — el recorte de alcance es solo en cantidad de componentes, no en arquitectura (mantener monorepo, Fumadocs, Storybook, Changesets desde el día uno).
 

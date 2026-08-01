@@ -1,0 +1,135 @@
+---
+title: Card
+description: Contenedor de saldo, producto o resumen
+---
+
+import { Badge, Button, Card } from 'intibank-ui';
+
+Contenedor de superficie elevada. En Intibank agrupa un producto del usuario —una cuenta, una tarjeta, una meta de ahorro— con su saldo y sus acciones.
+
+Es un compuesto de piezas sin comportamiento: `Card` no abre, no cierra y no captura foco. Si el bloque necesita ser clickeable entero, pasar el elemento por `render`.
+
+## Uso
+
+```tsx
+import { Card } from 'intibank-ui';
+
+<Card.Root>
+  <Card.Header>
+    <Card.Title>Cuenta Sol</Card.Title>
+    <Card.Description>Soles · 191-3456789-0-12</Card.Description>
+  </Card.Header>
+  <Card.Content>
+    <p className="text-3xl font-semibold tabular-nums">S/ 4,820.50</p>
+  </Card.Content>
+</Card.Root>;
+```
+
+## Anatomía
+
+<Preview>
+  <Card.Root className="w-80">
+    <Card.Header>
+      <Card.Title>Cuenta Sol</Card.Title>
+      <Card.Description>Soles · 191-3456789-0-12</Card.Description>
+    </Card.Header>
+    <Card.Content>
+      <p className="text-3xl font-semibold tabular-nums">S/ 4,820.50</p>
+      <p className="mt-1 text-sm text-muted-foreground">Disponible S/ 4,320.50</p>
+    </Card.Content>
+  </Card.Root>
+</Preview>
+
+- **`Card.Root`** — la superficie: borde, radio, `bg-card` y sombra.
+- **`Card.Header`** — título y descripción.
+- **`Card.Title`** — un `h3` por defecto.
+- **`Card.Description`** — texto de apoyo en `muted-foreground`.
+- **`Card.Content`** — el cuerpo. Trae `pt-0` porque el gap con el header ya lo pone el padding inferior de este.
+- **`Card.Footer`** — acciones, en fila.
+
+Todas las piezas son opcionales y el orden no está impuesto.
+
+## Con acciones
+
+<Preview>
+  <Card.Root className="w-80">
+    <Card.Header>
+      <Card.Title>Cuenta Sol</Card.Title>
+      <Card.Description>Soles · 191-3456789-0-12</Card.Description>
+    </Card.Header>
+    <Card.Content>
+      <p className="text-3xl font-semibold tabular-nums">S/ 4,820.50</p>
+    </Card.Content>
+    <Card.Footer>
+      <Button size="sm">Transferir</Button>
+      <Button size="sm" variant="outline">Ver movimientos</Button>
+    </Card.Footer>
+  </Card.Root>
+</Preview>
+
+## Con estado
+
+Combinar con [`Badge`](/docs/data-display/badge) cuando el producto tiene un estado que el usuario debe ver antes que el saldo.
+
+<Preview>
+  <Card.Root className="w-80">
+    <Card.Header>
+      <div className="flex items-start justify-between gap-3">
+        <Card.Title>Tarjeta de crédito</Card.Title>
+        <Badge variant="warning">Pago pendiente</Badge>
+      </div>
+      <Card.Description>Visa Inti · **** 4021</Card.Description>
+    </Card.Header>
+    <Card.Content>
+      <p className="text-3xl font-semibold tabular-nums">S/ 1,240.00</p>
+      <p className="mt-1 text-sm text-muted-foreground">Vence el 15 de agosto</p>
+    </Card.Content>
+  </Card.Root>
+</Preview>
+
+## Solo contenido
+
+Sin `Card.Header`, compensar el `pt-0` de `Card.Content`.
+
+<Preview>
+  <Card.Root className="w-80">
+    <Card.Content className="pt-6">
+      <p className="text-sm text-muted-foreground">Ahorro del mes</p>
+      <p className="mt-1 text-2xl font-semibold tabular-nums">S/ 380.00</p>
+    </Card.Content>
+  </Card.Root>
+</Preview>
+
+## Cambiar el elemento con `render`
+
+Cada pieza acepta `render`, igual que el resto de la librería. Sirve para dos cosas concretas:
+
+```tsx
+// El nivel de heading depende de la página, no del componente.
+<Card.Title render={<h2 />}>Cuenta Sol</Card.Title>
+
+// La tarjeta entera como enlace al detalle de la cuenta.
+<Card.Root render={<a href="/cuentas/191" />}>…</Card.Root>
+```
+
+<Callout type="warn">
+  Si la Card entera es un enlace, no meter botones adentro: un control
+  interactivo dentro de otro es HTML inválido y el lector de pantalla anuncia
+  un solo destino. Elegir uno de los dos — tarjeta clickeable, o tarjeta
+  estática con acciones en el footer.
+</Callout>
+
+## Tokens
+
+`Card.Root` usa `bg-card` / `text-card-foreground`, no `background`. En modo claro `card` es blanco puro sobre un `background` arena, y en oscuro es `piedra-900` sobre `piedra-950` — en ambos casos la tarjeta se separa del fondo por luminancia, no solo por el borde. Ver [Colors](/docs/foundations/colors).
+
+## Props
+
+Todas las piezas comparten la misma forma:
+
+| Prop        | Tipo                                        | Default            |
+| ----------- | ------------------------------------------- | ------------------ |
+| `render`    | `ReactElement \| (props, state) => Element` | el tag por defecto |
+| `className` | `string`                                    | —                  |
+
+Tags por defecto: `div` para `Root`, `Header`, `Content` y `Footer`; `h3` para `Title`; `p` para `Description`. Cada pieza acepta además las props nativas de su elemento.

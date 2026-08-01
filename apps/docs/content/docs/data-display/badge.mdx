@@ -1,0 +1,87 @@
+---
+title: Badge
+description: Etiqueta de estado para movimientos y productos
+---
+
+import { Badge } from 'intibank-ui';
+
+Etiqueta corta y no interactiva. En Intibank su uso principal es el **estado de una transacción** dentro de una lista de movimientos.
+
+## Uso
+
+```tsx
+import { Badge } from 'intibank-ui';
+
+<Badge variant="success">Completada</Badge>;
+```
+
+## Variantes
+
+<Preview>
+  <Badge variant="neutral">Pendiente</Badge>
+  <Badge variant="primary">Nuevo</Badge>
+  <Badge variant="secondary">Cuota 3/12</Badge>
+  <Badge variant="success">Completada</Badge>
+  <Badge variant="warning">En proceso</Badge>
+  <Badge variant="destructive">Rechazada</Badge>
+  <Badge variant="outline">Programada</Badge>
+</Preview>
+
+- **`neutral`** — el default. Estados sin carga emocional (pendiente, borrador).
+- **`success` / `warning` / `destructive`** — el resultado de una operación: completada, en proceso, rechazada.
+- **`primary` / `secondary`** — marcas de producto, no de estado (un plan nuevo, el número de cuota).
+- **`outline`** — cuando el badge acompaña a otro que sí lleva color y no debe competir con él.
+
+<Callout>
+  No usar `success` y `destructive` como decoración: en una lista de
+  movimientos, el verde y el rojo ya significan "salió bien" y "salió mal".
+  Un badge rojo que solo etiqueta una categoría hace leer un problema donde
+  no lo hay.
+</Callout>
+
+## Tamaños
+
+<Preview>
+  <Badge size="sm" variant="success">Completada</Badge>
+  <Badge size="default" variant="success">Completada</Badge>
+</Preview>
+
+**`sm`** para listas densas (varias filas de movimientos en pantalla); **`default`** para el resto.
+
+## En una lista de movimientos
+
+<Preview>
+  <ul className="flex w-full max-w-sm flex-col gap-3 text-sm">
+    <li className="flex items-center justify-between gap-4">
+      <span>Transferencia a Yape</span>
+      <Badge variant="success">Completada</Badge>
+    </li>
+    <li className="flex items-center justify-between gap-4">
+      <span>Pago de servicio — Luz del Sur</span>
+      <Badge variant="warning">En proceso</Badge>
+    </li>
+    <li className="flex items-center justify-between gap-4">
+      <span>Retiro sin tarjeta</span>
+      <Badge variant="destructive">Rechazada</Badge>
+    </li>
+  </ul>
+</Preview>
+
+## Accesibilidad
+
+El color no puede ser el único portador del estado — un usuario con daltonismo ve tres badges idénticos. El texto dentro del badge es el que comunica; la variante solo lo refuerza.
+
+Si el badge se agrega a un elemento cuyo nombre accesible ya se lee aparte (por ejemplo un ícono), describir el estado en el texto igual y no depender de `title`.
+
+## Tokens
+
+Las variantes de estado usan el par `X` / `X-foreground` — el rol de **superficie** de los semánticos, no `X-text`. Un badge es un fondo de color con texto encima, así que su contraste se mide contra su propio texto y no contra el fondo de la página. Ver [Colors](/docs/foundations/colors).
+
+## Props
+
+| Prop      | Tipo                                                                                            | Default     |
+| --------- | ----------------------------------------------------------------------------------------------- | ----------- |
+| `variant` | `"neutral" \| "primary" \| "secondary" \| "success" \| "warning" \| "destructive" \| "outline"` | `"neutral"` |
+| `size`    | `"sm" \| "default"`                                                                             | `"default"` |
+
+`Badge` renderiza un `<span>` y acepta el resto de props nativas de ese elemento.

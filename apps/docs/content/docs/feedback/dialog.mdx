@@ -1,0 +1,179 @@
+---
+title: Dialog
+description: Ventana modal para confirmar una acción o pedir un dato corto
+---
+
+import { Button, Dialog, Field, Input } from 'intibank-ui';
+
+Ventana modal sobre `@base-ui/react/dialog`. En Intibank su uso principal es **confirmar una operación irreversible** — transferir, bloquear una tarjeta, cerrar una cuenta — donde conviene frenar al usuario un segundo y mostrarle exactamente qué está por pasar.
+
+Mientras está abierto, el resto de la página queda fuera del árbol accesible: nadie puede seguir tocando la pantalla de atrás con el teclado ni oírla en un lector de pantalla.
+
+## Uso
+
+```tsx
+import { Button, Dialog } from 'intibank-ui';
+
+<Dialog.Root>
+  <Dialog.Trigger render={<Button />}>Transferir</Dialog.Trigger>
+  <Dialog.Portal>
+    <Dialog.Backdrop />
+    <Dialog.Popup>
+      <Dialog.Header>
+        <Dialog.Title>Confirmar transferencia</Dialog.Title>
+        <Dialog.Description>
+          Vas a enviar S/ 1,250.00 a Rosa Quispe. La operación no se puede
+          revertir.
+        </Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Footer>
+        <Dialog.Close render={<Button variant="outline" />}>Cancelar</Dialog.Close>
+        <Dialog.Close render={<Button />}>Confirmar</Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Popup>
+  </Dialog.Portal>
+</Dialog.Root>;
+```
+
+<Preview>
+  <Dialog.Root>
+    <Dialog.Trigger render={<Button />}>Transferir</Dialog.Trigger>
+    <Dialog.Portal>
+      <Dialog.Backdrop />
+      <Dialog.Popup>
+        <Dialog.Header>
+          <Dialog.Title>Confirmar transferencia</Dialog.Title>
+          {/* El texto va pegado a las etiquetas: en MDX, un hijo en su propia línea se parsea como párrafo markdown y Dialog.Description ya renderiza un <p>, así que quedaría uno anidado dentro del otro. */}
+          <Dialog.Description>Vas a enviar S/ 1,250.00 a Rosa Quispe (BCP · **** 8842). La operación no se puede revertir.</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <Dialog.Close render={<Button variant="outline" />}>Cancelar</Dialog.Close>
+          <Dialog.Close render={<Button />}>Confirmar</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Popup>
+    </Dialog.Portal>
+  </Dialog.Root>
+</Preview>
+
+## Anatomía
+
+| Pieza                  | Qué hace                                                                    |
+| ---------------------- | --------------------------------------------------------------------------- |
+| `Dialog.Root`          | Estado de apertura. No renderiza nada.                                      |
+| `Dialog.Trigger`       | Lo que abre el diálogo. Sin estilo propio: se compone con `Button` vía `render`. |
+| `Dialog.Portal`        | Saca el diálogo del flujo del documento.                                    |
+| `Dialog.Backdrop`      | El velo que atenúa la página de atrás.                                      |
+| `Dialog.Popup`         | La superficie del diálogo. Centrada, con scroll interno si el contenido crece. |
+| `Dialog.Header`        | Agrupa título y descripción.                                                |
+| `Dialog.Title`         | El nombre accesible del diálogo.                                            |
+| `Dialog.Description`   | Su descripción accesible.                                                   |
+| `Dialog.Footer`        | Las acciones. En móvil se apilan con la primaria arriba.                    |
+| `Dialog.Close`         | Cierra. También se compone con `Button` vía `render`.                       |
+
+`Trigger` y `Close` no traen estilo de botón a propósito: sería un segundo lugar donde mantener las mismas variantes que ya vive en [`Button`](/docs/forms/button). Componerlos con `render` deja una sola definición.
+
+## Acción destructiva
+
+<Preview>
+  <Dialog.Root>
+    <Dialog.Trigger render={<Button variant="outline" />}>Bloquear tarjeta</Dialog.Trigger>
+    <Dialog.Portal>
+      <Dialog.Backdrop />
+      <Dialog.Popup>
+        <Dialog.Header>
+          <Dialog.Title>Bloquear la Visa Inti **** 4021</Dialog.Title>
+          <Dialog.Description>Se rechazarán los consumos y las suscripciones asociadas. Podés desbloquearla desde la app cuando quieras.</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <Dialog.Close render={<Button variant="outline" />}>Cancelar</Dialog.Close>
+          <Dialog.Close render={<Button variant="destructive" />}>Bloquear</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Popup>
+    </Dialog.Portal>
+  </Dialog.Root>
+</Preview>
+
+<Callout>
+  El botón que confirma lleva el verbo de la acción — "Bloquear", "Transferir" —
+  y no "Aceptar". Quien lee solo los botones tiene que poder saber qué va a
+  pasar; "Aceptar" obliga a volver a leer el título para entenderlo.
+</Callout>
+
+## Con un formulario
+
+<Preview>
+  <Dialog.Root>
+    <Dialog.Trigger render={<Button />}>Editar alias</Dialog.Trigger>
+    <Dialog.Portal>
+      <Dialog.Backdrop />
+      <Dialog.Popup>
+        <Dialog.Header>
+          <Dialog.Title>Editar alias de la cuenta</Dialog.Title>
+          <Dialog.Description>Es el nombre con el que ves la cuenta dentro de la app.</Dialog.Description>
+        </Dialog.Header>
+        <Field.Root name="alias">
+          <Field.Label>Alias</Field.Label>
+          <Input defaultValue="Cuenta Sol" />
+          <Field.Description>Máximo 24 caracteres.</Field.Description>
+        </Field.Root>
+        <Dialog.Footer>
+          <Dialog.Close render={<Button variant="outline" />}>Cancelar</Dialog.Close>
+          <Dialog.Close render={<Button />}>Guardar</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Popup>
+    </Dialog.Portal>
+  </Dialog.Root>
+</Preview>
+
+Un diálogo aguanta un formulario corto — un alias, un monto, un motivo. Si necesita más de tres campos o navegación entre pasos, va una pantalla propia: un modal alto obliga a hacer scroll dentro de una ventana que además tapa el contexto que el usuario venía mirando.
+
+## Controlado
+
+Para dejarlo abierto mientras se procesa la operación (y cerrarlo recién cuando el servidor responde), se controla el estado:
+
+```tsx
+const [abierto, setAbierto] = useState(false);
+
+<Dialog.Root open={abierto} onOpenChange={setAbierto}>
+  {/* ... */}
+</Dialog.Root>;
+```
+
+`onOpenChange` recibe además un segundo argumento con el motivo del cambio (`escapeKey`, `outsidePress`, `closePress`…), útil para no dar por confirmada una operación que en realidad se canceló con `Escape`.
+
+Para que no se cierre haciendo click afuera mientras hay algo en curso, `<Dialog.Root disablePointerDismissal>`.
+
+## Accesibilidad
+
+El popup tiene rol `dialog` y toma su nombre de `Dialog.Title` y su descripción de `Dialog.Description` — por eso las dos son piezas propias y no un `<h2>` con las mismas clases.
+
+El foco entra al diálogo al abrirse, queda atrapado adentro mientras está abierto y vuelve al trigger al cerrarse. `Escape` cierra. El resto de la página queda con `aria-hidden` mientras tanto.
+
+Siempre debe haber una forma visible de cerrar sin confirmar: en los ejemplos es el botón "Cancelar". Un diálogo cuya única salida es `Escape` deja fuera a quien navega por táctil con lector de pantalla.
+
+## Tokens
+
+El velo usa `--overlay`, el único token semántico que no es un color opaco sino una mezcla contra `transparent`, y el único sin `-foreground`: nada se apoya encima. Sale de `noche` en modo claro y de `piedra` en oscuro, donde sube de 55% a 70% porque sobre un fondo ya oscuro un velo tenue no separa el diálogo de la página. Ver [Colors](/docs/foundations/colors).
+
+La superficie del popup usa `popover` / `popover-foreground`, el rol de las capas flotantes, igual que el listado de [`Select`](/docs/forms/select).
+
+## Props
+
+`Dialog.Root`
+
+| Prop                     | Tipo                              | Default |
+| ------------------------ | --------------------------------- | ------- |
+| `open`                   | `boolean`                         | —       |
+| `defaultOpen`            | `boolean`                         | `false` |
+| `onOpenChange`           | `(open, details) => void`         | —       |
+| `modal`                  | `boolean \| "trap-focus"`         | `true`  |
+| `disablePointerDismissal` | `boolean`                        | `false` |
+
+`Dialog.Popup`
+
+| Prop           | Tipo                                | Default | Nota                              |
+| -------------- | ----------------------------------- | ------- | --------------------------------- |
+| `initialFocus` | `boolean \| RefObject \| function`  | `true`  | Qué se enfoca al abrir.           |
+| `finalFocus`   | `boolean \| RefObject \| function`  | `true`  | Qué se enfoca al cerrar.          |
+
+`Dialog.Header` y `Dialog.Footer` solo aportan layout: aceptan `render` para decidir su tag, igual que las piezas de [`Card`](/docs/data-display/card).

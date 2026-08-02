@@ -1,0 +1,244 @@
+---
+title: Select
+description: Desplegable para elegir una opción de una lista cerrada
+---
+
+import { Field, Select } from 'intibank-ui';
+
+Desplegable de opción única sobre `@base-ui/react/select`. En Intibank aparece en casi todo formulario con más de un producto en juego: elegir la cuenta de origen de una transferencia, el tipo de documento, la moneda.
+
+No es un `<select>` nativo: el listado se renderiza en un portal, así que se puede estilar, agrupar y marcar la opción elegida con un check. A cambio hay que armarlo por piezas.
+
+Para el label, la descripción y el mensaje de error se compone con [`Field`](/docs/forms/field), igual que [`Input`](/docs/forms/input) — `Select` es solo el control.
+
+## Uso
+
+```tsx
+import { Select } from 'intibank-ui';
+
+const cuentas = [
+  { value: 'ahorro-soles', label: 'Cuenta Sol — S/ 4,820.50' },
+  { value: 'ahorro-dolares', label: 'Cuenta Inti USD — $ 1,140.00' },
+];
+
+<Select.Root items={cuentas}>
+  <Select.Trigger>
+    <Select.Value placeholder="Elegí una cuenta" />
+    <Select.Icon />
+  </Select.Trigger>
+  <Select.Portal>
+    <Select.Positioner>
+      <Select.Popup>
+        <Select.List>
+          {cuentas.map((cuenta) => (
+            <Select.Item key={cuenta.value} value={cuenta.value}>
+              <Select.ItemIndicator />
+              <Select.ItemText>{cuenta.label}</Select.ItemText>
+            </Select.Item>
+          ))}
+        </Select.List>
+      </Select.Popup>
+    </Select.Positioner>
+  </Select.Portal>
+</Select.Root>;
+```
+
+<Callout>
+  `items` no es decorativo. Sin esa prop, el trigger muestra el valor crudo
+  (`ahorro-soles`) en lugar de la etiqueta del ítem elegido. Es el mapa que
+  `Select.Value` usa para traducir uno en la otra.
+</Callout>
+
+<Preview>
+  <Select.Root items={[
+    { value: 'ahorro-soles', label: 'Cuenta Sol — S/ 4,820.50' },
+    { value: 'ahorro-dolares', label: 'Cuenta Inti USD — $ 1,140.00' },
+    { value: 'sueldo', label: 'Cuenta Sueldo — S/ 320.00' },
+  ]}>
+    <Select.Trigger className="w-72">
+      <Select.Value placeholder="Elegí una cuenta" />
+      <Select.Icon />
+    </Select.Trigger>
+    <Select.Portal>
+      <Select.Positioner>
+        <Select.Popup>
+          <Select.List>
+            <Select.Item value="ahorro-soles">
+              <Select.ItemIndicator />
+              <Select.ItemText>Cuenta Sol — S/ 4,820.50</Select.ItemText>
+            </Select.Item>
+            <Select.Item value="ahorro-dolares">
+              <Select.ItemIndicator />
+              <Select.ItemText>Cuenta Inti USD — $ 1,140.00</Select.ItemText>
+            </Select.Item>
+            <Select.Item value="sueldo">
+              <Select.ItemIndicator />
+              <Select.ItemText>Cuenta Sueldo — S/ 320.00</Select.ItemText>
+            </Select.Item>
+          </Select.List>
+        </Select.Popup>
+      </Select.Positioner>
+    </Select.Portal>
+  </Select.Root>
+</Preview>
+
+## Anatomía
+
+| Pieza                  | Qué hace                                                                 |
+| ---------------------- | ------------------------------------------------------------------------ |
+| `Select.Root`          | Estado y valor. No renderiza nada.                                       |
+| `Select.Trigger`       | El control visible. Comparte estilos con `Input`: misma altura, mismo borde, mismo anillo de foco. |
+| `Select.Value`         | El texto del valor elegido, o el `placeholder` si no hay ninguno.        |
+| `Select.Icon`          | La flecha. Trae un chevron propio; pasarle children lo reemplaza.        |
+| `Select.Portal`        | Saca el listado del flujo del documento para que no lo recorte un `overflow`. |
+| `Select.Positioner`    | Lo ubica respecto del trigger.                                           |
+| `Select.Popup`         | La superficie del listado.                                               |
+| `Select.List`          | El contenedor de ítems.                                                  |
+| `Select.Item`          | Una opción. Su `value` es lo que viaja en el formulario.                 |
+| `Select.ItemText`      | El texto de la opción.                                                   |
+| `Select.ItemIndicator` | La marca de "elegida". Trae un check propio.                             |
+| `Select.Group` / `Select.GroupLabel` | Agrupan opciones bajo un encabezado.                       |
+
+`Select.Icon` y `Select.ItemIndicator` traen sus glifos por defecto porque la librería no depende de ningún paquete de íconos — sumarlo obligaría a instalarlo a todo consumidor. Pasarles children usa el ícono del set que tengas.
+
+## Dentro de un Field
+
+<Preview>
+  <Field.Root name="origen" className="w-72">
+    <Field.Label>Cuenta de origen</Field.Label>
+    <Select.Root items={[
+      { value: 'ahorro-soles', label: 'Cuenta Sol — S/ 4,820.50' },
+      { value: 'sueldo', label: 'Cuenta Sueldo — S/ 320.00' },
+    ]}>
+      <Select.Trigger>
+        <Select.Value placeholder="Elegí una cuenta" />
+        <Select.Icon />
+      </Select.Trigger>
+      <Select.Portal>
+        <Select.Positioner>
+          <Select.Popup>
+            <Select.List>
+              <Select.Item value="ahorro-soles">
+                <Select.ItemIndicator />
+                <Select.ItemText>Cuenta Sol — S/ 4,820.50</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="sueldo">
+                <Select.ItemIndicator />
+                <Select.ItemText>Cuenta Sueldo — S/ 320.00</Select.ItemText>
+              </Select.Item>
+            </Select.List>
+          </Select.Popup>
+        </Select.Positioner>
+      </Select.Portal>
+    </Select.Root>
+    <Field.Description>Desde acá sale el dinero de la transferencia.</Field.Description>
+  </Field.Root>
+</Preview>
+
+El `name` va en `Field.Root` y no en `Select.Root`: el Field lo propaga al control junto con `disabled` y el estado de validación, así que el valor se envía con el formulario sin cablear nada a mano.
+
+## Con grupos
+
+<Preview>
+  <Select.Root>
+    <Select.Trigger className="w-72">
+      <Select.Value placeholder="Elegí un destino" />
+      <Select.Icon />
+    </Select.Trigger>
+    <Select.Portal>
+      <Select.Positioner>
+        <Select.Popup>
+          <Select.List>
+            <Select.Group>
+              <Select.GroupLabel>Mis cuentas</Select.GroupLabel>
+              <Select.Item value="ahorro-soles">
+                <Select.ItemIndicator />
+                <Select.ItemText>Cuenta Sol</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="ahorro-dolares">
+                <Select.ItemIndicator />
+                <Select.ItemText>Cuenta Inti USD</Select.ItemText>
+              </Select.Item>
+            </Select.Group>
+            <Select.Group>
+              <Select.GroupLabel>Contactos frecuentes</Select.GroupLabel>
+              <Select.Item value="rosa">
+                <Select.ItemIndicator />
+                <Select.ItemText>Rosa Quispe</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="carlos" disabled>
+                <Select.ItemIndicator />
+                <Select.ItemText>Carlos Loayza (dado de baja)</Select.ItemText>
+              </Select.Item>
+            </Select.Group>
+          </Select.List>
+        </Select.Popup>
+      </Select.Positioner>
+    </Select.Portal>
+  </Select.Root>
+</Preview>
+
+## Tamaños
+
+`Select.Trigger` toma las mismas variantes de `size` que `Input` — `sm`, `default` y `lg` — porque es el mismo control de formulario y los dos se alinean en la misma fila.
+
+## Controlado
+
+```tsx
+const [origen, setOrigen] = useState<string | null>(null);
+
+<Select.Root value={origen} onValueChange={setOrigen} items={cuentas}>
+  {/* ... */}
+</Select.Root>;
+```
+
+`Select.Root` es genérico en el tipo del valor, así que los ítems no tienen por qué ser strings:
+
+```tsx
+<Select.Root<Cuenta> items={cuentas} itemToStringValue={(c) => c.id}>
+  {/* value y onValueChange quedan tipados como Cuenta */}
+</Select.Root>;
+```
+
+## Cuándo no usarlo
+
+- **Más de ~15 opciones**: buscar es más rápido que scrollear. Va un autocomplete.
+- **Dos opciones excluyentes**: un radio group las muestra ambas sin abrir nada.
+- **Algo que se activa o no**: eso es un switch, no un select de "Sí"/"No".
+
+## Accesibilidad
+
+El trigger expone rol `combobox` y el listado rol `listbox`, con `aria-selected` en la opción elegida. Funciona entero con teclado: `Enter` o `Espacio` abre, las flechas recorren, escribir salta a la opción que empieza con esas letras, `Escape` cierra sin cambiar el valor.
+
+El desplegable se abre **debajo** del campo y no encima, a diferencia del default de Base UI: alineado sobre el trigger tapa el label y el mensaje de error del `Field` justo mientras se elige. Se puede volver al comportamiento original con `<Select.Positioner alignItemWithTrigger>`.
+
+Cuando el listado no entra en pantalla, `Select.Popup` hace scroll interno en vez de desbordarse — el alto máximo sale del espacio real que calcula el positioner.
+
+## Props
+
+`Select.Root`
+
+| Prop            | Tipo                                        | Default |
+| --------------- | ------------------------------------------- | ------- |
+| `items`         | `Record<string, ReactNode>` o `{ value, label }[]` | —       |
+| `value`         | `Value \| null`                             | —       |
+| `defaultValue`  | `Value \| null`                             | `null`  |
+| `onValueChange` | `(value, details) => void`                  | —       |
+| `disabled`      | `boolean`                                   | `false` |
+| `required`      | `boolean`                                   | `false` |
+| `modal`         | `boolean`                                   | `true`  |
+
+`Select.Trigger`
+
+| Prop   | Tipo                        | Default     |
+| ------ | --------------------------- | ----------- |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` |
+
+`Select.Positioner`
+
+| Prop                   | Tipo      | Default | Nota                                    |
+| ---------------------- | --------- | ------- | --------------------------------------- |
+| `alignItemWithTrigger` | `boolean` | `false` | El default de Base UI es `true`.        |
+| `sideOffset`           | `number`  | `4`     |                                         |
+
+Cada pieza acepta además el resto de props de su equivalente en `@base-ui/react/select`.

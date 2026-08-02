@@ -35,9 +35,11 @@ Stack: **Vitest + React Testing Library + `@storybook/test`**. No usar Chromatic
 
 ## Alcance
 
-Librería con **4-6 componentes iniciales**, pero pensada para crecer de forma progresiva — no es un alcance fijo ni definitivo. Priorizar calidad y terminación sobre cantidad en cada tanda. Estado por el dominio (banca digital): **Button**, **Field**, **Input**, **Card** (saldo/cuenta) y **Badge** (estado de transacción) implementados; pendientes Dialog (confirmación) y Select.
+Librería con **4-6 componentes iniciales**, pero pensada para crecer de forma progresiva — no es un alcance fijo ni definitivo. Priorizar calidad y terminación sobre cantidad en cada tanda. Estado por el dominio (banca digital): **Button**, **Field**, **Input**, **Select** (cuenta de origen, moneda), **Card** (saldo/cuenta), **Badge** (estado de transacción) y **Dialog** (confirmación de operación) implementados. Los candidatos para la próxima tanda salen de lo que más se repite en pantallas del producto: tabla o lista de movimientos, y Tabs para separar productos dentro de una vista.
 
-`Field` es la envoltura de formularios (label + descripción + error + estado de validación, sobre `@base-ui/react/field`); los controles (`Input`, y más adelante `Select`) se componen dentro de él y no reimplementan label ni mensajes de error.
+`Field` es la envoltura de formularios (label + descripción + error + estado de validación, sobre `@base-ui/react/field`); los controles (`Input`, `Select`) se componen dentro de él y no reimplementan label ni mensajes de error. `Select.Trigger` reusa `inputVariants` en lugar de declarar su propia cva: es el mismo control de formulario, y con dos definiciones separadas alcanza con tocar una para que un Select y un Input dejen de alinearse en la misma fila.
+
+La librería **no depende de ningún paquete de íconos** — sumarlo obligaría a instalarlo a todo consumidor. Los componentes que necesitan un glifo (`Select.Icon`, `Select.ItemIndicator`) lo traen inline como default, y pasarles children lo reemplaza por el del set que use quien la consume.
 
 `Card` y `Badge` no envuelven una primitiva de Base UI (no hay comportamiento que encapsular), pero sí siguen sus convenciones de API: `Card` expone `render` en cada pieza vía `useRender`, para que el nivel de heading de `Card.Title` y el tag de `Card.Root` los decida la página.
 
@@ -105,6 +107,8 @@ Sistema de dos capas — nunca usar la paleta base directo en componentes, siemp
 
 **Fuente única para todo el monorepo**: los tokens se definen solo en `packages/ui/src/styles/` (`tokens.css` + `semantic.css`) y se exportan como parte del paquete `intibank-ui`. Ningún otro archivo del monorepo declara un valor de color nuevo — `apps/docs` y `apps/storybook` importan ese mismo CSS en vez de duplicar valores, para que la paleta nunca se desincronice entre la librería y su documentación.
 
+Esto incluye el bloque `@theme inline` que convierte cada variable semántica en utilidad de Tailwind (`--card` → `bg-card`): vive en `semantic.css`, junto a las variables que mapea, y **no** se repite en el CSS de cada app. Las clases que genera son las que escriben los componentes de la librería, así que tiene que viajar dentro del paquete publicado — si estuviera solo en las apps del monorepo, quien instala `intibank-ui` desde npm importaría los tokens, vería las variables definidas y aun así renderizaría todo sin estilos.
+
 - **Colores y tokens de marca**: se reutilizan igual en toda la superficie del proyecto (librería, Storybook, Fumadocs) — un sitio de docs con paleta distinta a la de los componentes que documenta se siente como un producto distinto.
 - **Tipografía editorial y layout de documentación**: es una capa aparte, específica de `apps/docs` (prosa larga, jerarquía de headings, bloques de código, tabla de contenidos) — no vive en `packages/ui`, se monta sobre los tokens de color sin reemplazarlos. Fumadocs ya trae sus propios estilos base (`fumadocs-ui`) para esto, que conviven con los tokens de Intibank.
 
@@ -120,7 +124,7 @@ Ver `DESIGN.md` para la tabla completa de valores hex por escalón (50-950).
 
 ### Variables semánticas (convención shadcn/ui)
 
-`background`, `foreground`, `card`, `popover`, `border`, `input`, `ring`, `muted`, `primary`, `secondary`, `accent`, `destructive`, `success`, `warning` — cada una con su `-foreground` correspondiente. Definidas en `:root` (modo claro) y `.dark` (modo oscuro) en `packages/ui/src/styles/semantic.css`.
+`background`, `foreground`, `card`, `popover`, `border`, `input`, `ring`, `muted`, `primary`, `secondary`, `accent`, `destructive`, `success`, `warning` — cada una con su `-foreground` correspondiente. Se suma `overlay` (el velo detrás de un `Dialog`), que es la excepción a la regla: no es un color opaco sino un `color-mix` contra `transparent`, y no lleva `-foreground` porque nada se apoya encima. Definidas en `:root` (modo claro) y `.dark` (modo oscuro) en `packages/ui/src/styles/semantic.css`.
 
 Reglas fijas a respetar:
 

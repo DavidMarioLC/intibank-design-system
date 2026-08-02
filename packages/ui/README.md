@@ -68,8 +68,12 @@ export function Transferencia() {
 | `Input` | Campo de texto. Tamaños `sm`, `default`, `lg`; estados deshabilitado e inválido. |
 | `Card` | Superficie de contenido: `Card.Root`, `Card.Header`, `Card.Title`, `Card.Description`, `Card.Content`, `Card.Footer`. Cada pieza acepta `render` para decidir su tag (el nivel de heading de `Card.Title` lo elige la página, no el componente). |
 | `Badge` | Estado de una transacción u operación. Variantes `neutral`, `primary`, `secondary`, `success`, `warning`, `destructive`, `outline`; tamaños `sm`, `default`. |
+| `Select` | Desplegable de opción única: `Select.Root`, `Select.Trigger`, `Select.Value`, `Select.Icon`, `Select.Portal`, `Select.Positioner`, `Select.Popup`, `Select.List`, `Select.Item`, `Select.ItemText`, `Select.ItemIndicator`, `Select.Group`, `Select.GroupLabel`. El trigger comparte los tamaños de `Input`. |
+| `Dialog` | Ventana modal para confirmar una operación: `Dialog.Root`, `Dialog.Trigger`, `Dialog.Portal`, `Dialog.Backdrop`, `Dialog.Popup`, `Dialog.Header`, `Dialog.Title`, `Dialog.Description`, `Dialog.Footer`, `Dialog.Close`. `Trigger` y `Close` se componen con `Button` vía `render`. |
 
 Los controles se componen dentro de `Field` y no reimplementan label ni mensajes de error. Cada componente exporta también sus variantes (`buttonVariants`, `inputVariants`, `badgeVariants`) por si necesitás las clases sin el componente.
+
+`Select` trae sus glifos (el chevron y el check) inline, porque la librería no depende de ningún paquete de íconos. Pasarle children a `Select.Icon` o `Select.ItemIndicator` los reemplaza por los del set que uses.
 
 ## Design tokens
 

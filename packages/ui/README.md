@@ -69,6 +69,7 @@ export function Transferencia() {
 | `Card` | Superficie de contenido: `Card.Root`, `Card.Header`, `Card.Title`, `Card.Description`, `Card.Content`, `Card.Footer`. Cada pieza acepta `render` para decidir su tag (el nivel de heading de `Card.Title` lo elige la página, no el componente). |
 | `Badge` | Estado de una transacción u operación. Variantes `neutral`, `primary`, `secondary`, `success`, `warning`, `destructive`, `outline`; tamaños `sm`, `default`. |
 | `Select` | Desplegable de opción única: `Select.Root`, `Select.Trigger`, `Select.Value`, `Select.Icon`, `Select.Portal`, `Select.Positioner`, `Select.Popup`, `Select.List`, `Select.Item`, `Select.ItemText`, `Select.ItemIndicator`, `Select.Group`, `Select.GroupLabel`. El trigger comparte los tamaños de `Input`. |
+| `Table` | Lista tabular de movimientos: `Table.Scroller`, `Table.Root`, `Table.Caption`, `Table.Header`, `Table.Body`, `Table.Footer`, `Table.Row`, `Table.Head`, `Table.Cell`. `Head` y `Cell` aceptan `numeric` para alinear a la derecha con `tabular-nums`. |
 | `Dialog` | Ventana modal para confirmar una operación: `Dialog.Root`, `Dialog.Trigger`, `Dialog.Portal`, `Dialog.Backdrop`, `Dialog.Popup`, `Dialog.Header`, `Dialog.Title`, `Dialog.Description`, `Dialog.Footer`, `Dialog.Close`. `Trigger` y `Close` se componen con `Button` vía `render`. |
 
 Los controles se componen dentro de `Field` y no reimplementan label ni mensajes de error. Cada componente exporta también sus variantes (`buttonVariants`, `inputVariants`, `badgeVariants`) por si necesitás las clases sin el componente.

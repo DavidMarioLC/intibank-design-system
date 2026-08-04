@@ -1,4 +1,4 @@
 {
   "title": "Data display",
-  "pages": ["badge", "card"]
+  "pages": ["badge", "card", "table"]
 }

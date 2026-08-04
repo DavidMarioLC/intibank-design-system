@@ -1,0 +1,259 @@
+---
+title: Table
+description: Lista tabular de movimientos y operaciones
+---
+
+import { Badge, Card, Table } from 'intibank-ui';
+
+Tabla de datos. En Intibank es la vista de movimientos de una cuenta o tarjeta: fecha, detalle, estado y monto, una fila por operación.
+
+Es un compuesto de piezas sin comportamiento sobre los elementos nativos de tabla. No ordena, no pagina y no selecciona filas — eso lo maneja la pantalla que la usa. Lo que aporta la librería es la tipografía, los bordes y la alineación de las columnas de plata.
+
+## Uso
+
+```tsx
+import { Table } from 'intibank-ui';
+
+<Table.Scroller>
+  <Table.Root>
+    <Table.Header>
+      <Table.Row>
+        <Table.Head>Fecha</Table.Head>
+        <Table.Head>Detalle</Table.Head>
+        <Table.Head numeric>Monto</Table.Head>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>02 ago</Table.Cell>
+        <Table.Cell>Yape a Rosa Quispe</Table.Cell>
+        <Table.Cell numeric>-S/ 120.00</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table.Root>
+</Table.Scroller>;
+```
+
+## Anatomía
+
+<Preview>
+  <Table.Scroller>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Fecha</Table.Head>
+          <Table.Head>Detalle</Table.Head>
+          <Table.Head>Estado</Table.Head>
+          <Table.Head numeric>Monto</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell className="whitespace-nowrap text-muted-foreground">02 ago</Table.Cell>
+          <Table.Cell className="font-medium">Yape a Rosa Quispe</Table.Cell>
+          <Table.Cell><Badge variant="success" size="sm">Completado</Badge></Table.Cell>
+          <Table.Cell numeric>-S/ 120.00</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell className="whitespace-nowrap text-muted-foreground">01 ago</Table.Cell>
+          <Table.Cell className="font-medium">Haberes agosto</Table.Cell>
+          <Table.Cell><Badge variant="success" size="sm">Completado</Badge></Table.Cell>
+          <Table.Cell numeric>+S/ 3,200.00</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell className="whitespace-nowrap text-muted-foreground">01 ago</Table.Cell>
+          <Table.Cell className="font-medium">Transferencia a Cuenta Inti USD</Table.Cell>
+          <Table.Cell><Badge variant="warning" size="sm">En proceso</Badge></Table.Cell>
+          <Table.Cell numeric>-S/ 400.00</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell className="whitespace-nowrap text-muted-foreground">30 jul</Table.Cell>
+          <Table.Cell className="font-medium">Compra en Mercado San Isidro</Table.Cell>
+          <Table.Cell><Badge variant="destructive" size="sm">Rechazado</Badge></Table.Cell>
+          <Table.Cell numeric>-S/ 64.90</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </Table.Scroller>
+</Preview>
+
+- **`Table.Scroller`** — el contenedor de scroll horizontal.
+- **`Table.Root`** — el `<table>`: tipografía, `border-collapse` y ancho completo.
+- **`Table.Caption`** — un `<caption>` al pie. Le da nombre accesible a la tabla.
+- **`Table.Header`** / **`Table.Body`** / **`Table.Footer`** — `<thead>`, `<tbody>`, `<tfoot>`.
+- **`Table.Row`** — una `<tr>`.
+- **`Table.Head`** — un `<th>` de columna.
+- **`Table.Cell`** — una `<td>`.
+
+## El scroller es explícito
+
+`Table.Scroller` no viene incluido dentro de `Table.Root`. Si Root renderizara un `div` envolviendo al `<table>`, `render` quedaría ambiguo —no se sabría cuál de los dos elementos reemplaza— y una tabla dentro de un contenedor que ya scrollea terminaría con dos áreas de scroll anidadas.
+
+<Callout type="warn">
+  Sin `Table.Scroller`, una tabla más ancha que su contenedor empuja el ancho de
+  la página entera y el usuario termina scrolleando el documento de costado para
+  ver la columna de montos. Envolvela siempre, salvo que ya esté adentro de algo
+  con su propio `overflow`.
+</Callout>
+
+El scroller solo controla el eje horizontal. El vertical lo maneja la página: acotar el alto acá dejaría el `<thead>` saliendo de vista sin nada que lo fije, que se lee peor que una tabla larga.
+
+## Columnas de plata
+
+`numeric` alinea a la derecha y activa `tabular-nums`. Van juntas a propósito: sin ancho fijo de dígito las comas y los unos bailan entre filas y el punto decimal deja de formar una vertical, que es justo lo que hace comparable una columna de montos de un vistazo.
+
+```tsx
+<Table.Head numeric>Monto</Table.Head>
+<Table.Cell numeric>-S/ 120.00</Table.Cell>
+```
+
+Aplicarlo tanto al `Table.Head` como a las celdas — si solo se alinean las celdas, el rótulo queda a la izquierda de su propia columna.
+
+Es una prop y no un `className` suelto por una razón concreta: si cada pantalla escribe `text-right tabular-nums` a mano, alcanza con que una se lo olvide para que esa tabla de movimientos se lea distinta al resto del producto.
+
+## Con caption y total
+
+<Preview>
+  <Table.Scroller>
+    <Table.Root>
+      <Table.Caption>Movimientos de la Cuenta Sol · últimos 30 días</Table.Caption>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Fecha</Table.Head>
+          <Table.Head>Detalle</Table.Head>
+          <Table.Head numeric>Monto</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell className="whitespace-nowrap text-muted-foreground">02 ago</Table.Cell>
+          <Table.Cell>Yape a Rosa Quispe</Table.Cell>
+          <Table.Cell numeric>-S/ 120.00</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell className="whitespace-nowrap text-muted-foreground">01 ago</Table.Cell>
+          <Table.Cell>Haberes agosto</Table.Cell>
+          <Table.Cell numeric>+S/ 3,200.00</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell className="whitespace-nowrap text-muted-foreground">31 jul</Table.Cell>
+          <Table.Cell>Mantenimiento de cuenta</Table.Cell>
+          <Table.Cell numeric>-S/ 8.00</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+      <Table.Footer>
+        <Table.Row>
+          <Table.Cell colSpan={2}>Saldo final</Table.Cell>
+          <Table.Cell numeric>S/ 4,820.50</Table.Cell>
+        </Table.Row>
+      </Table.Footer>
+    </Table.Root>
+  </Table.Scroller>
+</Preview>
+
+`Table.Caption` es la forma más barata de darle nombre accesible a la tabla. Si el título ya está en la página como heading, se puede reemplazar por `aria-labelledby` en `Table.Root`.
+
+## Dentro de una Card
+
+El caso real en el producto: la tabla es el contenido de la tarjeta de la cuenta. `Card.Content` va con `px-0` para que las filas lleguen a los bordes, y el padding lo recuperan la primera y la última columna.
+
+<Preview>
+  <Card.Root className="w-full">
+    <Card.Header>
+      <Card.Title>Cuenta Sol</Card.Title>
+      <Card.Description>Soles · 191-3456789-0-12</Card.Description>
+    </Card.Header>
+    <Card.Content className="px-0">
+      <Table.Scroller>
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head className="pl-6">Fecha</Table.Head>
+              <Table.Head>Detalle</Table.Head>
+              <Table.Head numeric className="pr-6">Monto</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell className="whitespace-nowrap pl-6 text-muted-foreground">02 ago</Table.Cell>
+              <Table.Cell>Yape a Rosa Quispe</Table.Cell>
+              <Table.Cell numeric className="pr-6">-S/ 120.00</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell className="whitespace-nowrap pl-6 text-muted-foreground">01 ago</Table.Cell>
+              <Table.Cell>Haberes agosto</Table.Cell>
+              <Table.Cell numeric className="pr-6">+S/ 3,200.00</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table.Root>
+      </Table.Scroller>
+    </Card.Content>
+  </Card.Root>
+</Preview>
+
+## Encabezados de fila
+
+Cuando una columna identifica la fila —el detalle del movimiento, el número de operación— pasarla a `th scope="row"` con `render`. Un lector de pantalla anuncia entonces "Yape a Rosa Quispe, Monto, -S/ 120.00" al recorrer la columna de montos, en vez de leer el número solo.
+
+```tsx
+<Table.Cell render={<th scope="row" />} className="text-left font-medium">
+  Yape a Rosa Quispe
+</Table.Cell>
+```
+
+El `text-left` hace falta porque el `<th>` nativo viene centrado por el navegador.
+
+## Estado vacío
+
+Una fila que ocupa todas las columnas, sin ilustración ni componente aparte — la tabla ya comunica qué se está mirando.
+
+<Preview>
+  <Table.Scroller>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Fecha</Table.Head>
+          <Table.Head>Detalle</Table.Head>
+          <Table.Head numeric>Monto</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell colSpan={3} className="py-10 text-center text-muted-foreground">No hay movimientos en el período elegido.</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </Table.Scroller>
+</Preview>
+
+## Filas que llevan a un detalle
+
+<Callout type="warn">
+  No pasarle `render={<a />}` a `Table.Row`: un `<a>` no es contenido válido de
+  un `<tbody>` y el navegador lo saca de la tabla al parsear. Si el movimiento
+  tiene una pantalla de detalle, poner el enlace adentro de una celda —o un
+  botón en una última columna de acciones.
+</Callout>
+
+## Tokens
+
+El hover de fila usa `bg-muted/50` y los encabezados `text-muted-foreground`, así la fila resaltada nunca compite con el `bg-card` de abajo ni con el `primary` de un botón dentro de la tabla. Los bordes salen de `border`. Ver [Colors](/docs/foundations/colors).
+
+El hover está en todas las filas, no solo en las clickeables: en una tabla ancha —fecha a la izquierda, monto a la derecha— es lo que deja seguir la fila con la vista de punta a punta.
+
+## Props
+
+Todas las piezas comparten la misma forma:
+
+| Prop        | Tipo                                        | Default            |
+| ----------- | ------------------------------------------- | ------------------ |
+| `render`    | `ReactElement \| (props, state) => Element` | el tag por defecto |
+| `className` | `string`                                    | —                  |
+
+Tags por defecto: `div` para `Scroller`; `table`, `caption`, `thead`, `tbody`, `tfoot`, `tr`, `th` y `td` para el resto. Cada pieza acepta además las props nativas de su elemento (`colSpan`, `scope`, `headers`).
+
+`Table.Head` y `Table.Cell` suman una prop propia:
+
+| Prop      | Tipo      | Default |
+| --------- | --------- | ------- |
+| `numeric` | `boolean` | `false` |

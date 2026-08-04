@@ -71,8 +71,11 @@ export function Transferencia() {
 | `Select` | Desplegable de opción única: `Select.Root`, `Select.Trigger`, `Select.Value`, `Select.Icon`, `Select.Portal`, `Select.Positioner`, `Select.Popup`, `Select.List`, `Select.Item`, `Select.ItemText`, `Select.ItemIndicator`, `Select.Group`, `Select.GroupLabel`. El trigger comparte los tamaños de `Input`. |
 | `Table` | Lista tabular de movimientos: `Table.Scroller`, `Table.Root`, `Table.Caption`, `Table.Header`, `Table.Body`, `Table.Footer`, `Table.Row`, `Table.Head`, `Table.Cell`. `Head` y `Cell` aceptan `numeric` para alinear a la derecha con `tabular-nums`. |
 | `Dialog` | Ventana modal para confirmar una operación: `Dialog.Root`, `Dialog.Trigger`, `Dialog.Portal`, `Dialog.Backdrop`, `Dialog.Popup`, `Dialog.Header`, `Dialog.Title`, `Dialog.Description`, `Dialog.Footer`, `Dialog.Close`. `Trigger` y `Close` se componen con `Button` vía `render`. |
+| `Tabs` | Vistas alternativas de un mismo contenido: `Tabs.Root`, `Tabs.List`, `Tabs.Tab`, `Tabs.Indicator`, `Tabs.Panel`. Variantes `underline` y `pills`, orientación horizontal y vertical. |
 
-Los controles se componen dentro de `Field` y no reimplementan label ni mensajes de error. Cada componente exporta también sus variantes (`buttonVariants`, `inputVariants`, `badgeVariants`) por si necesitás las clases sin el componente.
+Los controles se componen dentro de `Field` y no reimplementan label ni mensajes de error. Cada componente exporta también sus variantes (`buttonVariants`, `inputVariants`, `badgeVariants`, `tabsListVariants`) por si necesitás las clases sin el componente.
+
+En `Tabs` la variante se declara una sola vez, en `Tabs.List`, que la publica como `data-variant`; el tab y el indicador se estilan contra ese atributo del padre, así que no hay forma de que queden desincronizados.
 
 `Select` trae sus glifos (el chevron y el check) inline, porque la librería no depende de ningún paquete de íconos. Pasarle children a `Select.Icon` o `Select.ItemIndicator` los reemplaza por los del set que uses.
 

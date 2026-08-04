@@ -1,0 +1,224 @@
+---
+title: Tabs
+description: Vistas alternativas de un mismo contenido, sin cambiar de pantalla
+---
+
+import { Badge, Card, Table, Tabs } from 'intibank-ui';
+
+Pestañas sobre `@base-ui/react/tabs`. En Intibank aparecen cada vez que una pantalla tiene **un solo sujeto y varias vistas de ese sujeto**: el detalle de una cuenta con sus movimientos, sus datos y su CCI; una tarjeta con sus consumos y sus límites.
+
+Lo que aporta la librería son los estilos y las dos variantes; el comportamiento —foco que rota con las flechas, `aria-controls` cableado, panel enfocable— lo pone Base UI.
+
+## Uso
+
+```tsx
+import { Tabs } from 'intibank-ui';
+
+<Tabs.Root defaultValue="movimientos">
+  <Tabs.List>
+    <Tabs.Tab value="movimientos">Movimientos</Tabs.Tab>
+    <Tabs.Tab value="detalle">Detalle</Tabs.Tab>
+    <Tabs.Tab value="cci">CCI</Tabs.Tab>
+    <Tabs.Indicator />
+  </Tabs.List>
+
+  <Tabs.Panel value="movimientos">Últimos 30 días</Tabs.Panel>
+  <Tabs.Panel value="detalle">Cuenta Sol en soles</Tabs.Panel>
+  <Tabs.Panel value="cci">002-193-001234567890-14</Tabs.Panel>
+</Tabs.Root>;
+```
+
+<Preview>
+  <Tabs.Root defaultValue="movimientos" className="w-full">
+    <Tabs.List>
+      <Tabs.Tab value="movimientos">Movimientos</Tabs.Tab>
+      <Tabs.Tab value="detalle">Detalle</Tabs.Tab>
+      <Tabs.Tab value="cci">CCI</Tabs.Tab>
+      <Tabs.Indicator renderBeforeHydration />
+    </Tabs.List>
+    <Tabs.Panel value="movimientos" className="text-sm">Yape a Rosa Quispe · S/ 45.00 — Abono de haberes · S/ 3,200.00</Tabs.Panel>
+    <Tabs.Panel value="detalle" className="text-sm">Cuenta Sol en soles, abierta el 12/03/2024. Sin comisión de mantenimiento.</Tabs.Panel>
+    <Tabs.Panel value="cci" className="text-sm tabular-nums">002-193-001234567890-14</Tabs.Panel>
+  </Tabs.Root>
+</Preview>
+
+## Anatomía
+
+| Pieza            | Qué hace                                                                                  |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| `Tabs.Root`      | Guarda qué tab está activo y arma el layout según la orientación.                          |
+| `Tabs.List`      | Agrupa los tabs. **Es donde se declara la variante** y donde vive el manejo del teclado.   |
+| `Tabs.Tab`       | Un tab. Su `value` es lo que lo une al panel del mismo `value`.                             |
+| `Tabs.Indicator` | La marca que sigue al tab activo — subrayado o pastilla, según la variante. Es opcional.   |
+| `Tabs.Panel`     | El contenido de un tab. Se monta solo cuando su tab está activo.                            |
+
+<Callout>
+  `variant` se declara una sola vez, en `Tabs.List`, que la publica como
+  `data-variant`; el tab y el indicador se estilan contra ese atributo del
+  padre. Pedírsela a las tres piezas sería tres lugares donde escribir lo mismo:
+  alcanzaría con olvidarse del indicador para dejar un subrayado suelto adentro
+  de un contenedor de pastillas.
+</Callout>
+
+## Variantes
+
+`underline` es el default: la línea inferior separa los tabs del contenido, así que funciona cuando las pestañas encabezan una sección entera de la página.
+
+`pills` se apoya en un fondo `muted` propio y no dibuja ninguna línea de separación — es la que va **adentro de una `Card`**, donde el borde de la card ya hace de separador y una segunda línea horizontal parte la superficie en dos.
+
+<Preview>
+  <Tabs.Root defaultValue="soles" className="w-full">
+    <Tabs.List variant="pills">
+      <Tabs.Tab value="soles">Cuenta Sol</Tabs.Tab>
+      <Tabs.Tab value="dolares">Cuenta Inti USD</Tabs.Tab>
+      <Tabs.Tab value="credito" disabled>Tarjeta de crédito</Tabs.Tab>
+      <Tabs.Indicator renderBeforeHydration />
+    </Tabs.List>
+    <Tabs.Panel value="soles" className="text-sm">Saldo disponible S/ 4,820.50</Tabs.Panel>
+    <Tabs.Panel value="dolares" className="text-sm">Saldo disponible $ 1,140.00</Tabs.Panel>
+    <Tabs.Panel value="credito" className="text-sm">Todavía no tenés una tarjeta de crédito con nosotros.</Tabs.Panel>
+  </Tabs.Root>
+</Preview>
+
+## Dentro de una Card
+
+<Preview>
+  <Card.Root className="w-full">
+    <Card.Header>
+      <Card.Title>Cuenta Sol</Card.Title>
+      <Card.Description>S/ 4,820.50 disponibles</Card.Description>
+    </Card.Header>
+    <Card.Content>
+      <Tabs.Root defaultValue="movimientos">
+        <Tabs.List variant="pills">
+          <Tabs.Tab value="movimientos">Movimientos</Tabs.Tab>
+          <Tabs.Tab value="detalle">Detalle</Tabs.Tab>
+          <Tabs.Indicator renderBeforeHydration />
+        </Tabs.List>
+        <Tabs.Panel value="movimientos">
+          <Table.Scroller>
+            <Table.Root>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Head>Fecha</Table.Head>
+                  <Table.Head>Detalle</Table.Head>
+                  <Table.Head>Estado</Table.Head>
+                  <Table.Head numeric>Monto</Table.Head>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>02 ago</Table.Cell>
+                  <Table.Cell>Yape a Rosa Quispe</Table.Cell>
+                  <Table.Cell><Badge variant="success">Procesado</Badge></Table.Cell>
+                  <Table.Cell numeric>S/ -45.00</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>01 ago</Table.Cell>
+                  <Table.Cell>Abono de haberes</Table.Cell>
+                  <Table.Cell><Badge variant="success">Procesado</Badge></Table.Cell>
+                  <Table.Cell numeric>S/ +3,200.00</Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table.Root>
+          </Table.Scroller>
+        </Tabs.Panel>
+        <Tabs.Panel value="detalle" className="py-3 text-sm">Cuenta Sol en soles, abierta el 12/03/2024. CCI 002-193-001234567890-14.</Tabs.Panel>
+      </Tabs.Root>
+    </Card.Content>
+  </Card.Root>
+</Preview>
+
+## Vertical
+
+Con `orientation="vertical"`, `Tabs.Root` pasa a `flex-row` y la lista se apila a un costado. Base UI acompaña el cambio en el teclado: las flechas pasan a ser ↑ y ↓.
+
+<Preview>
+  <Tabs.Root defaultValue="movimientos" orientation="vertical" className="w-full">
+    <Tabs.List variant="pills">
+      <Tabs.Tab value="movimientos">Movimientos</Tabs.Tab>
+      <Tabs.Tab value="detalle">Detalle</Tabs.Tab>
+      <Tabs.Tab value="cci">CCI</Tabs.Tab>
+      <Tabs.Indicator renderBeforeHydration />
+    </Tabs.List>
+    <Tabs.Panel value="movimientos" className="text-sm">Yape a Rosa Quispe · S/ 45.00</Tabs.Panel>
+    <Tabs.Panel value="detalle" className="text-sm">Cuenta Sol en soles, abierta el 12/03/2024.</Tabs.Panel>
+    <Tabs.Panel value="cci" className="text-sm tabular-nums">002-193-001234567890-14</Tabs.Panel>
+  </Tabs.Root>
+</Preview>
+
+## Controlado
+
+Para que el tab activo salga de la URL —y que compartir el link lleve a la misma vista— se controla el valor:
+
+```tsx
+const [vista, setVista] = useState('movimientos');
+
+<Tabs.Root value={vista} onValueChange={setVista}>
+  {/* ... */}
+</Tabs.Root>;
+```
+
+`onValueChange` recibe un segundo argumento con el motivo del cambio. Los cambios automáticos (`'disabled'`, `'missing'`, `'initial'`) los dispara Base UI cuando el tab activo se deshabilita o desaparece, y no se pueden cancelar.
+
+Por default los paneles inactivos no están en el DOM. Si adentro hay algo cuyo estado no se puede perder al cambiar de tab —un formulario a medio llenar, un scroll—, `keepMounted` en el panel lo deja montado y oculto.
+
+## Cuándo no usarlo
+
+- **Si cada vista merece su propia URL.** Un movimiento que alguien quiere compartir o marcar como favorito necesita una ruta, no un tab. Los tabs sirven para vistas del mismo recurso, no para secciones distintas del producto.
+- **Si hay más de cinco opciones.** La fila se corta o se desborda y deja opciones fuera de vista; ahí va un [`Select`](/docs/forms/select) o una navegación lateral.
+- **Si el contenido de los paneles se compara entre sí.** Los tabs esconden todo menos uno; si el usuario tiene que mirar dos cosas a la vez, van una al lado de la otra.
+- **Si es un paso de un flujo.** Transferir → confirmar → comprobante es una secuencia con orden y estado, no vistas intercambiables.
+
+## Accesibilidad
+
+La lista tiene rol `tablist`, cada tab `tab` y cada panel `tabpanel`, con `aria-controls` y `aria-labelledby` cableados entre sí por Base UI.
+
+El teclado sigue el patrón estándar de tabs (**roving tabindex**): un solo <kbd>Tab</kbd> entra a la lista y cae en el tab activo —no en el primero—, las flechas mueven el foco entre tabs, y otro <kbd>Tab</kbd> salta al panel. Por eso `Tabs.Panel` es enfocable y trae anillo de foco propio.
+
+Por default el foco **no** activa: mover con las flechas y confirmar con <kbd>Enter</kbd> o <kbd>Space</kbd>. Con `activateOnFocus` en `Tabs.List`, la flecha ya cambia de panel — solo conviene si los paneles son livianos, porque si cada uno pide datos al servidor, recorrer la lista con el teclado dispara todas las peticiones.
+
+Un `Tabs.Tab` con `disabled` sigue siendo alcanzable con las flechas pero no se puede activar. Si el primer tab está deshabilitado, hay que pasar un `defaultValue` explícito de un tab habilitado: durante el render en el servidor todavía no se sabe cuáles lo están.
+
+## Props
+
+`Tabs.Root`
+
+| Prop            | Tipo                            | Default        | Nota                                          |
+| --------------- | ------------------------------- | -------------- | --------------------------------------------- |
+| `value`         | `any \| null`                   | —              | Controlado. `null` deja todo sin seleccionar. |
+| `defaultValue`  | `any \| null`                   | `0`            | No controlado.                                |
+| `orientation`   | `'horizontal' \| 'vertical'`    | `'horizontal'` | Cambia el layout y las teclas de flecha.      |
+| `onValueChange` | `(value, details) => void`      | —              |                                               |
+
+`Tabs.List`
+
+| Prop              | Tipo                        | Default       | Nota                                            |
+| ----------------- | --------------------------- | ------------- | ----------------------------------------------- |
+| `variant`         | `'underline' \| 'pills'`    | `'underline'` | La heredan `Tabs.Tab` y `Tabs.Indicator`.       |
+| `activateOnFocus` | `boolean`                   | `false`       | Activar al mover el foco con las flechas.       |
+| `loopFocus`       | `boolean`                   | `true`        | Volver al primero al pasar el último.           |
+
+`Tabs.Tab`
+
+| Prop       | Tipo      | Default | Nota                                  |
+| ---------- | --------- | ------- | ------------------------------------- |
+| `value`    | `any`     | —       | Requerido. Une el tab con su panel.   |
+| `disabled` | `boolean` | `false` |                                       |
+
+`Tabs.Panel`
+
+| Prop          | Tipo      | Default | Nota                                                       |
+| ------------- | --------- | ------- | ---------------------------------------------------------- |
+| `value`       | `any`     | —       | Requerido.                                                 |
+| `keepMounted` | `boolean` | `false` | Deja el panel oculto en el DOM en vez de desmontarlo.      |
+
+`Tabs.Indicator`
+
+| Prop                    | Tipo      | Default | Nota                                                                       |
+| ----------------------- | --------- | ------- | -------------------------------------------------------------------------- |
+| `renderBeforeHydration` | `boolean` | `false` | En SSR, evita que el indicador salte a su lugar recién después de hidratar. |
+
+Los ejemplos de esta página lo pasan: este sitio es Next.js y sin él se alcanza a ver el subrayado moverse al cargar. En una app que renderiza los tabs solo en el cliente no hace falta.
+
+Todas las piezas aceptan además `className` y `render`, como el resto de la librería.

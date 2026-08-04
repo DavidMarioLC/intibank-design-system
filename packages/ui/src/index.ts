@@ -5,3 +5,4 @@ export * from "./components/dialog";
 export * from "./components/field";
 export * from "./components/input";
 export * from "./components/select";
+export * from "./components/table";

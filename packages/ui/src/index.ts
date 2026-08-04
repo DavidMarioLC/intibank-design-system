@@ -6,3 +6,4 @@ export * from "./components/field";
 export * from "./components/input";
 export * from "./components/select";
 export * from "./components/table";
+export * from "./components/tabs";

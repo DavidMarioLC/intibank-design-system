@@ -1,3 +1,10 @@
 {
-  "pages": ["index", "foundations", "forms", "data-display", "feedback"]
+  "pages": [
+    "index",
+    "foundations",
+    "forms",
+    "data-display",
+    "feedback",
+    "navigation"
+  ]
 }

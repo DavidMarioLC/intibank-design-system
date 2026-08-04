@@ -1,5 +1,12 @@
 # @intibank/storybook
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [2fa1301]
+  - intibank-ui@0.5.0
+
 ## 0.0.3
 
 ### Patch Changes

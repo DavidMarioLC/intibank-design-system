@@ -55,9 +55,9 @@ describe("Tabs", () => {
     const tab = screen.getByRole("tab", { name: "Movimientos" });
     const panel = screen.getByRole("tabpanel");
 
-    expect(within(screen.getByRole("tablist")).getAllByRole("tab")).toHaveLength(
-      3,
-    );
+    expect(
+      within(screen.getByRole("tablist")).getAllByRole("tab"),
+    ).toHaveLength(3);
     expect(tab).toHaveAttribute("aria-selected", "true");
     expect(tab).toHaveAttribute("aria-controls", panel.id);
     expect(panel).toHaveAttribute("aria-labelledby", tab.id);

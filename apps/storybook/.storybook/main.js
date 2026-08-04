@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
@@ -7,11 +9,11 @@ const config = {
     "../../../packages/ui/src/components/**/*.stories.@(ts|tsx)",
   ],
   addons: [
-    "@storybook/addon-a11y",
-    "@storybook/addon-docs",
-    "@storybook/addon-mcp",
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-docs"),
+    getAbsolutePath("@storybook/addon-mcp"),
   ],
-  framework: "@storybook/react-vite",
+  framework: getAbsolutePath("@storybook/react-vite"),
   viteFinal: async (viteConfig) => {
     viteConfig.plugins ??= [];
     viteConfig.plugins.push(tailwindcss());
@@ -19,3 +21,7 @@ const config = {
   },
 };
 export default config;
+
+function getAbsolutePath(value) {
+  return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+}

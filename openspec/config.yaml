@@ -1,0 +1,26 @@
+schema: spec-driven
+
+context: |
+  Intibank UI is a pnpm workspace containing a publishable React component
+  package, its Storybook catalog, and a Tailwind-free consumer example.
+  Runtime: Node 24, React with strict TypeScript, Base UI behavior, semantic CSS
+  custom properties, prefixed component selectors, and compiled Tailwind CSS
+  without Preflight. React and React DOM are peer dependencies and stay external.
+  Build and quality tools: tsdown, Tailwind CLI, Storybook, Vitest, Ultracite
+  with Biome, Changesets, and GitHub Actions.
+  DESIGN.md is the visual source. When its YAML conflicts with prose and component
+  specifications, use the prose and record the normalization.
+
+rules:
+  proposal:
+    - Keep the initial delivery limited to Button and essential infrastructure.
+  specs:
+    - Express consumer behavior and accessibility as testable scenarios.
+  tasks:
+    - Include build, package-installation, and no-Tailwind verification.
+
+operations:
+  apply:
+    guidance:
+      - Work incrementally and run the narrowest relevant check after each group.
+      - Do not publish npm packages or deploy Storybook while applying this change.

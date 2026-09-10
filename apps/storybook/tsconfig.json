@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "storybook-static/.tsbuildinfo"
+  },
+  "include": [
+    ".storybook/**/*.ts",
+    "../../packages/ui/src/**/*.stories.tsx",
+    "../../types/**/*.d.ts"
+  ]
+}

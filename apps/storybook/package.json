@@ -1,0 +1,14 @@
+{
+  "name": "@intibank/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "storybook build -c .storybook -o storybook-static",
+    "dev": "storybook dev -c .storybook -p 6006 --no-open"
+  },
+  "dependencies": {
+    "@fontsource-variable/hanken-grotesk": "5.2.8",
+    "@intibank/ui": "workspace:*"
+  }
+}

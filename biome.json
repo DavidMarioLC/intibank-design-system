@@ -1,0 +1,17 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/vitest"
+  ],
+  "files": {
+    "includes": [
+      "!!**/dist",
+      "!!**/storybook-static",
+      "!!**/node_modules",
+      "!!**/coverage",
+      "!!pnpm-lock.yaml"
+    ]
+  }
+}

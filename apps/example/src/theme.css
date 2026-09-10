@@ -1,0 +1,22 @@
+:root {
+  --intibank-color-primary: #1e1b4b;
+  --intibank-color-primary-hover: #312e81;
+  --intibank-color-on-primary: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #2e2a26;
+  background: #fafaf9;
+}
+
+.example-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+  max-width: 40rem;
+  padding: 2rem;
+  margin: 4rem auto;
+}

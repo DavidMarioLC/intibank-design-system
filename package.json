@@ -1,0 +1,52 @@
+{
+  "name": "intibank-design-system",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm build:ui && pnpm --filter @intibank/example build && pnpm --filter @intibank/storybook build",
+    "build:ui": "pnpm --filter @intibank/ui build",
+    "changeset": "changeset",
+    "check": "ultracite check . && pnpm openspec:validate",
+    "check:fix": "ultracite fix .",
+    "dev": "pnpm build:ui && concurrently --kill-others-on-fail --names ui,storybook \"pnpm --filter @intibank/ui dev\" \"pnpm --filter @intibank/storybook dev\"",
+    "openspec:validate": "openspec validate --all --strict --no-interactive",
+    "pack:check": "pnpm build:ui && node scripts/verify-package.mjs",
+    "test": "pnpm build:ui && pnpm test:unit && pnpm test:stories",
+    "test:stories": "vitest run --project storybook",
+    "test:unit": "vitest run --project unit",
+    "typecheck": "pnpm build:ui && tsc -b tsconfig.packages.json"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.12",
+    "@changesets/cli": "3.0.2",
+    "@fission-ai/openspec": "1.12.0",
+    "@storybook/addon-a11y": "10.6.0",
+    "@storybook/addon-docs": "10.6.0",
+    "@storybook/addon-vitest": "10.6.0",
+    "@storybook/react-vite": "10.6.0",
+    "@testing-library/jest-dom": "6.8.0",
+    "@testing-library/react": "16.3.0",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.1.1",
+    "@vitest/browser-playwright": "4.1.11",
+    "concurrently": "9.2.1",
+    "jsdom": "27.2.0",
+    "playwright": "1.57.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "storybook": "10.6.0",
+    "typescript": "7.0.2",
+    "ultracite": "7.11.0",
+    "vite": "7.2.6",
+    "vitest": "4.1.11"
+  },
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  }
+}

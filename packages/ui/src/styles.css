@@ -1,0 +1,139 @@
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+:root {
+  --intibank-color-primary: #f59e0b;
+  --intibank-color-primary-hover: #d97706;
+  --intibank-color-on-primary: #1e1b4b;
+  --intibank-color-terracotta: #de5c22;
+  --intibank-color-terracotta-hover: #c24a16;
+  --intibank-color-indigo: #1e1b4b;
+  --intibank-color-background: #fafaf9;
+  --intibank-color-surface: #f5f5f4;
+  --intibank-color-surface-elevated: #ffffff;
+  --intibank-color-text: #2e2a26;
+  --intibank-color-text-muted: #78716c;
+  --intibank-color-border: #e7e5e4;
+  --intibank-color-interactive-border: #78716c;
+  --intibank-color-focus-ring: #1e1b4b;
+  --intibank-font-family:
+    "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --intibank-radius-sm: 0.5rem;
+  --intibank-radius-md: 0.75rem;
+  --intibank-radius-lg: 1rem;
+  --intibank-radius-full: 9999px;
+  --intibank-disabled-opacity: 0.5;
+}
+
+@layer components {
+  .ib-button {
+    appearance: none;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: var(--intibank-radius-lg);
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--intibank-font-family);
+    font-weight: 600;
+    flex-shrink: 0;
+    gap: 0.5rem;
+    justify-content: center;
+    letter-spacing: 0.01em;
+    margin: 0;
+    text-decoration: none;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+    user-select: none;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ib-button:focus {
+    outline: none;
+  }
+
+  .ib-button:focus-visible {
+    outline: 2px solid var(--intibank-color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .ib-button--solid {
+    color: var(--intibank-color-on-primary);
+    background: var(--intibank-color-primary);
+    border-color: var(--intibank-color-primary);
+  }
+
+  .ib-button--solid:hover:not(:disabled, [data-disabled]) {
+    background: var(--intibank-color-primary-hover);
+    border-color: var(--intibank-color-primary-hover);
+  }
+
+  .ib-button--outline {
+    color: var(--intibank-color-text);
+    background: transparent;
+    border-color: var(--intibank-color-interactive-border);
+  }
+
+  .ib-button--outline:hover:not(:disabled, [data-disabled]),
+  .ib-button--ghost:hover:not(:disabled, [data-disabled]) {
+    background: var(--intibank-color-surface);
+  }
+
+  .ib-button--ghost {
+    color: var(--intibank-color-text);
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .ib-button--sm {
+    height: 2.5rem;
+    padding-inline: 0.875rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .ib-button--md {
+    height: 3rem;
+    padding-inline: 1.125rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .ib-button--lg {
+    height: 3.5rem;
+    padding-inline: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .ib-button > svg {
+    flex: none;
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .ib-button:disabled,
+  .ib-button[data-disabled] {
+    cursor: not-allowed;
+    opacity: var(--intibank-disabled-opacity);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ib-button {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .ib-button {
+      border-color: ButtonText;
+    }
+
+    .ib-button:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

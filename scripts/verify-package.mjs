@@ -32,6 +32,28 @@ if (!tarballName) {
 }
 
 const tarballPath = join(temporaryDirectory, tarballName);
+const tarballEntries = execFileSync("tar", ["-tf", tarballPath], {
+  encoding: "utf8",
+})
+  .trim()
+  .split("\n");
+const forbiddenTarballEntries = tarballEntries.filter(
+  (file) =>
+    file.startsWith("package/src/") ||
+    file.startsWith("package/node_modules/") ||
+    file.includes(".stories.") ||
+    file.includes(".test.") ||
+    file.includes("tailwind") ||
+    file.includes("tsconfig") ||
+    file.startsWith("package/apps/") ||
+    file.startsWith("package/openspec/")
+);
+if (forbiddenTarballEntries.length > 0) {
+  throw new Error(
+    `Packed package contains internal files:\n${forbiddenTarballEntries.join("\n")}`
+  );
+}
+
 writeFileSync(
   join(temporaryDirectory, "package.json"),
   `${JSON.stringify(
@@ -98,6 +120,8 @@ execFileSync(
 
 const installedPackage = join(temporaryDirectory, "node_modules/@intibank/ui");
 for (const file of [
+  "LICENSE",
+  "README.md",
   "dist/icons.cjs",
   "dist/icons.d.ts",
   "dist/icons.js",
@@ -114,6 +138,50 @@ for (const file of [
 const packageJson = JSON.parse(
   readFileSync(join(installedPackage, "package.json"), "utf8")
 );
+if (
+  packageJson.name !== "@intibank/ui" ||
+  packageJson.version !== "0.1.0" ||
+  packageJson.license !== "MIT"
+) {
+  throw new Error("Packed package identity or license is incorrect");
+}
+if (
+  packageJson.repository?.type !== "git" ||
+  packageJson.repository?.url !==
+    "git+https://github.com/DavidMarioLC/intibank-design-system.git" ||
+  packageJson.repository?.directory !== "packages/ui" ||
+  packageJson.homepage !==
+    "https://github.com/DavidMarioLC/intibank-design-system#readme" ||
+  packageJson.bugs?.url !==
+    "https://github.com/DavidMarioLC/intibank-design-system/issues"
+) {
+  throw new Error("Packed package repository metadata is incorrect");
+}
+for (const keyword of [
+  "accessibility",
+  "components",
+  "design-system",
+  "intibank",
+  "react",
+  "ui",
+]) {
+  if (!packageJson.keywords?.includes(keyword)) {
+    throw new Error(`Packed package keywords are missing ${keyword}`);
+  }
+}
+if (
+  readFileSync(join(installedPackage, "LICENSE"), "utf8") !==
+  readFileSync(join(repositoryRoot, "LICENSE"), "utf8")
+) {
+  throw new Error("Packed package license differs from the repository license");
+}
+if (
+  !readFileSync(join(installedPackage, "README.md"), "utf8").includes(
+    "pnpm add @intibank/ui react react-dom"
+  )
+) {
+  throw new Error("Packed package README is missing installation guidance");
+}
 if (
   !(
     packageJson.exports?.["./icons"]?.import &&

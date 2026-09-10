@@ -21,9 +21,11 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
+      - run: npm install --global npm@11.6.2
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm typecheck
       - run: pnpm test:unit
       - run: pnpm pack:check
-      - run: pnpm --filter @intibank/ui publish --access public --no-git-checks
+      - run: npm publish --access public
+        working-directory: packages/ui

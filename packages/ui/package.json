@@ -2,6 +2,24 @@
   "name": "@intibank/ui",
   "version": "0.1.0",
   "description": "Accessible React components for the Intibank design system",
+  "keywords": [
+    "accessibility",
+    "components",
+    "design-system",
+    "intibank",
+    "react",
+    "ui"
+  ],
+  "homepage": "https://github.com/DavidMarioLC/intibank-design-system#readme",
+  "bugs": {
+    "url": "https://github.com/DavidMarioLC/intibank-design-system/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidMarioLC/intibank-design-system.git",
+    "directory": "packages/ui"
+  },
+  "license": "MIT",
   "sideEffects": [
     "./dist/styles.css"
   ],

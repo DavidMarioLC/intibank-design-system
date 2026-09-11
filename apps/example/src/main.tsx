@@ -9,10 +9,11 @@ function App() {
   return (
     <main className="example-shell">
       <p>Esta aplicación no instala ni configura Tailwind.</p>
-      <Button>
+      <Button variant="secondary">
         <ArrowRightIcon aria-hidden="true" />
         Transferir
       </Button>
+      <Button variant="outline">Ver movimientos</Button>
     </main>
   );
 }

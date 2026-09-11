@@ -1,11 +1,4 @@
-# Button Specification
-
-## Purpose
-
-Defines the observable visual and interaction behavior of the initial accessible
-Button component across supported variants, sizes, and states.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Button public API
 The library SHALL export a ref-forwarding Button accepting native button behavior,

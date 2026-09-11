@@ -26,9 +26,15 @@ export function TransferAction() {
 
 ## Button
 
-`Button` is built on Base UI and supports `solid`, `outline`, and `ghost`
-variants, `sm`, `md`, and `lg` sizes, native button props, refs, disabled state,
-icons as children, and custom classes. Its safe default type is `button`.
+`Button` is built on Base UI and supports the institutional variants `primary`,
+`secondary`, `hairline`, `danger`, and `soft`. The default is `primary`.
+Compatibility aliases remain available: `solid` maps to `primary`, while
+`outline` and `ghost` map to `hairline`.
+
+All variants support `sm`, `md`, and `lg` sizes, native button props, refs,
+disabled state, icons as children, and custom classes. Its safe default type is
+`button`. Hover and keyboard focus styles follow the selected variant; disabled
+buttons use a shared warm neutral treatment.
 
 ```tsx
 import { Button } from "@intibank/ui";
@@ -36,7 +42,7 @@ import { ArrowRightIcon } from "@intibank/ui/icons";
 
 export function ContinueButton() {
   return (
-    <Button size="lg">
+    <Button size="lg" variant="secondary">
       Continuar
       <ArrowRightIcon aria-hidden="true" />
     </Button>
@@ -60,10 +66,23 @@ globally or on a subtree without recompiling the package:
 
 ```css
 .nightfall-theme {
-  --intibank-color-primary: #1e1b4b;
-  --intibank-color-primary-hover: #312e81;
-  --intibank-color-on-primary: #ffffff;
+  --intibank-button-primary-background: #1e1b4b;
+  --intibank-button-primary-foreground: #ffffff;
+  --intibank-button-primary-border: #1e1b4b;
+  --intibank-button-primary-hover-background: #312e81;
+  --intibank-button-primary-focus: #f59e0b;
 }
+```
+
+Each canonical variant exposes `--intibank-button-<variant>-background`,
+`-foreground`, `-border`, `-hover-background`, and `-focus` variables. Replace
+`<variant>` with `primary`, `secondary`, `hairline`, `danger`, or `soft`.
+Disabled buttons use these shared variables:
+
+```css
+--intibank-button-disabled-background: #f5f0ed;
+--intibank-button-disabled-foreground: #aaa6a3;
+--intibank-button-disabled-border: #f5f0ed;
 ```
 
 For structural exceptions, pass `className` and load the consumer stylesheet

@@ -25,7 +25,7 @@ JavaScript and compiled stylesheet exports.
 
 #### Scenario: Catalog is built
 - **WHEN** the Storybook production build runs
-- **THEN** variants, sizes, disabled, icon, interaction, and alternate-palette stories are present
+- **THEN** individual canonical variant, sizes, hover, focus-visible, disabled, icon, and interaction stories are present
 
 #### Scenario: Accessibility tests run
 - **WHEN** Storybook tests execute in Chromium
@@ -37,7 +37,7 @@ React and a bundler but does not depend on Tailwind.
 
 #### Scenario: Packed consumer builds
 - **WHEN** the package verification command runs
-- **THEN** the temporary application installs the tarball, imports Button and CSS, and builds successfully
+- **THEN** the temporary application installs the tarball, imports Button and CSS, uses an institutional variant and a compatibility alias, and builds successfully
 
 ### Requirement: Guarded future delivery
 Release and Pages workflows SHALL remain manually triggered, SHALL run verification before external delivery, and SHALL use short-lived npm Trusted Publishing credentials for automated package releases without storing a persistent publish token.

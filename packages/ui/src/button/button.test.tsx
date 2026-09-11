@@ -14,8 +14,27 @@ describe("Button", () => {
 
     const button = screen.getByRole("button", { name: "Transferir" });
     expect(button).toHaveAttribute("type", "button");
-    expect(button).toHaveClass("ib-button--solid", "ib-button--md");
+    expect(button).toHaveClass("ib-button--primary", "ib-button--md");
     expect(ref.current).toBe(button);
+  });
+
+  it.each([
+    ["primary", "primary"],
+    ["secondary", "secondary"],
+    ["hairline", "hairline"],
+    ["danger", "danger"],
+    ["soft", "soft"],
+    ["solid", "primary"],
+    ["outline", "hairline"],
+    ["ghost", "hairline"],
+  ] as const)("maps %s to the %s treatment", (variant, treatment) => {
+    render(<Button variant={variant}>{variant}</Button>);
+
+    const button = screen.getByRole("button", { name: variant });
+    expect(button).toHaveClass(`ib-button--${treatment}`);
+    if (variant !== treatment) {
+      expect(button).toHaveClass(`ib-button--${variant}`);
+    }
   });
 
   it("accepts variants, sizes, native props, and className", () => {

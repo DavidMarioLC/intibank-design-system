@@ -15,6 +15,38 @@
   --intibank-color-border: #e7e5e4;
   --intibank-color-interactive-border: #78716c;
   --intibank-color-focus-ring: #1e1b4b;
+  --intibank-button-primary-background: var(--intibank-color-primary);
+  --intibank-button-primary-foreground: var(--intibank-color-on-primary);
+  --intibank-button-primary-border: var(--intibank-color-primary);
+  --intibank-button-primary-hover-background: var(
+    --intibank-color-primary-hover
+  );
+  --intibank-button-primary-focus: var(--intibank-color-primary);
+  --intibank-button-secondary-background: var(
+    --intibank-color-terracotta-hover
+  );
+  --intibank-button-secondary-foreground: #ffffff;
+  --intibank-button-secondary-border: var(--intibank-color-terracotta-hover);
+  --intibank-button-secondary-hover-background: #a73a00;
+  --intibank-button-secondary-focus: var(--intibank-color-terracotta);
+  --intibank-button-hairline-background: #ffffff;
+  --intibank-button-hairline-foreground: var(--intibank-color-text);
+  --intibank-button-hairline-border: var(--intibank-color-border);
+  --intibank-button-hairline-hover-background: var(--intibank-color-surface);
+  --intibank-button-hairline-focus: var(--intibank-color-interactive-border);
+  --intibank-button-danger-background: #ffffff;
+  --intibank-button-danger-foreground: #dc2626;
+  --intibank-button-danger-border: #fca5a5;
+  --intibank-button-danger-hover-background: #fef2f2;
+  --intibank-button-danger-focus: #dc2626;
+  --intibank-button-soft-background: #ffedd5;
+  --intibank-button-soft-foreground: #744300;
+  --intibank-button-soft-border: #ffedd5;
+  --intibank-button-soft-hover-background: #fed7aa;
+  --intibank-button-soft-focus: var(--intibank-color-primary);
+  --intibank-button-disabled-background: #f5f0ed;
+  --intibank-button-disabled-foreground: #aaa6a3;
+  --intibank-button-disabled-border: #f5f0ed;
   --intibank-font-family:
     "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
   --intibank-radius-sm: 0.5rem;
@@ -49,6 +81,7 @@
     user-select: none;
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
+    --ib-button-focus-color: var(--intibank-color-focus-ring);
   }
 
   .ib-button:focus {
@@ -56,36 +89,66 @@
   }
 
   .ib-button:focus-visible {
-    outline: 2px solid var(--intibank-color-focus-ring);
+    outline: 2px solid var(--ib-button-focus-color);
     outline-offset: 2px;
   }
 
-  .ib-button--solid {
-    color: var(--intibank-color-on-primary);
-    background: var(--intibank-color-primary);
-    border-color: var(--intibank-color-primary);
+  .ib-button--primary {
+    --ib-button-focus-color: var(--intibank-button-primary-focus);
+    color: var(--intibank-button-primary-foreground);
+    background: var(--intibank-button-primary-background);
+    border-color: var(--intibank-button-primary-border);
   }
 
-  .ib-button--solid:hover:not(:disabled, [data-disabled]) {
-    background: var(--intibank-color-primary-hover);
-    border-color: var(--intibank-color-primary-hover);
+  .ib-button--primary:hover:not(:disabled, [data-disabled]) {
+    background: var(--intibank-button-primary-hover-background);
+    border-color: var(--intibank-button-primary-hover-background);
   }
 
-  .ib-button--outline {
-    color: var(--intibank-color-text);
-    background: transparent;
-    border-color: var(--intibank-color-interactive-border);
+  .ib-button--secondary {
+    --ib-button-focus-color: var(--intibank-button-secondary-focus);
+    color: var(--intibank-button-secondary-foreground);
+    background: var(--intibank-button-secondary-background);
+    border-color: var(--intibank-button-secondary-border);
   }
 
-  .ib-button--outline:hover:not(:disabled, [data-disabled]),
-  .ib-button--ghost:hover:not(:disabled, [data-disabled]) {
-    background: var(--intibank-color-surface);
+  .ib-button--secondary:hover:not(:disabled, [data-disabled]) {
+    background: var(--intibank-button-secondary-hover-background);
+    border-color: var(--intibank-button-secondary-hover-background);
   }
 
-  .ib-button--ghost {
-    color: var(--intibank-color-text);
-    background: transparent;
-    border-color: transparent;
+  .ib-button--hairline {
+    --ib-button-focus-color: var(--intibank-button-hairline-focus);
+    color: var(--intibank-button-hairline-foreground);
+    background: var(--intibank-button-hairline-background);
+    border-color: var(--intibank-button-hairline-border);
+  }
+
+  .ib-button--hairline:hover:not(:disabled, [data-disabled]) {
+    background: var(--intibank-button-hairline-hover-background);
+  }
+
+  .ib-button--danger {
+    --ib-button-focus-color: var(--intibank-button-danger-focus);
+    color: var(--intibank-button-danger-foreground);
+    background: var(--intibank-button-danger-background);
+    border-color: var(--intibank-button-danger-border);
+  }
+
+  .ib-button--danger:hover:not(:disabled, [data-disabled]) {
+    background: var(--intibank-button-danger-hover-background);
+  }
+
+  .ib-button--soft {
+    --ib-button-focus-color: var(--intibank-button-soft-focus);
+    color: var(--intibank-button-soft-foreground);
+    background: var(--intibank-button-soft-background);
+    border-color: var(--intibank-button-soft-border);
+  }
+
+  .ib-button--soft:hover:not(:disabled, [data-disabled]) {
+    background: var(--intibank-button-soft-hover-background);
+    border-color: var(--intibank-button-soft-hover-background);
   }
 
   .ib-button--sm {
@@ -117,8 +180,11 @@
 
   .ib-button:disabled,
   .ib-button[data-disabled] {
+    color: var(--intibank-button-disabled-foreground);
     cursor: not-allowed;
-    opacity: var(--intibank-disabled-opacity);
+    background: var(--intibank-button-disabled-background);
+    border-color: var(--intibank-button-disabled-border);
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {

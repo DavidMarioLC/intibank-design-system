@@ -88,13 +88,16 @@ import { createRoot } from "react-dom/client";
 import "@intibank/ui/styles.css";
 import "./theme.css";
 	createRoot(document.querySelector("#root")).render(
-	  <Button><ArrowRightIcon aria-hidden="true" />Transferir</Button>
+	  <>
+	    <Button variant="secondary"><ArrowRightIcon aria-hidden="true" />Transferir</Button>
+	    <Button variant="outline">Ver movimientos</Button>
+	  </>
 	);
 `
 );
 writeFileSync(
   join(temporaryDirectory, "theme.css"),
-  ":root { --intibank-color-primary: #1e1b4b; --intibank-color-on-primary: #ffffff; }\n"
+  ":root { --intibank-button-secondary-background: #1e1b4b; --intibank-button-secondary-foreground: #ffffff; }\n"
 );
 
 execFileSync(

@@ -28,12 +28,17 @@ changing unrelated host application elements.
 - **THEN** selectors target prefixed Intibank classes and no global reset is applied
 
 ### Requirement: Runtime theming
-The package SHALL express its semantic palette, typography, shapes, and disabled
-state through `--intibank-*` custom properties with documented defaults.
+The package SHALL express its semantic palette, typography, shapes, disabled
+state, and institutional Button treatments through documented `--intibank-*`
+custom properties with accessible defaults.
 
 #### Scenario: Palette is customized on a subtree
 - **WHEN** a consumer redefines supported variables on a container
-- **THEN** buttons inside that container use the new palette without rebuilding CSS
+- **THEN** every Button variant and interaction state inside that container uses the new palette without rebuilding CSS
+
+#### Scenario: Default theme is used
+- **WHEN** a consumer loads the stylesheet without overriding custom properties
+- **THEN** primary, secondary, hairline, danger, soft, focus, hover, and disabled treatments use the documented Intibank defaults
 
 ### Requirement: Consumer-managed fonts
 The package SHALL use Hanken Grotesk when available and SHALL NOT initiate a font

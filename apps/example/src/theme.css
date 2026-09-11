@@ -1,7 +1,8 @@
 :root {
-  --intibank-color-primary: #1e1b4b;
-  --intibank-color-primary-hover: #312e81;
-  --intibank-color-on-primary: #ffffff;
+  --intibank-button-secondary-background: #1e1b4b;
+  --intibank-button-secondary-border: #1e1b4b;
+  --intibank-button-secondary-focus: #f59e0b;
+  --intibank-button-secondary-hover-background: #312e81;
 }
 
 body {

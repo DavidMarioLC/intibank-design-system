@@ -83,7 +83,7 @@ writeFileSync(
   join(temporaryDirectory, "src.jsx"),
   `import React from "react";
 import { createRoot } from "react-dom/client";
-	import { Button } from "@intibank/ui";
+import { Button, MoneyField, TextField } from "@intibank/ui";
 	import { ArrowRightIcon } from "@intibank/ui/icons";
 import "@intibank/ui/styles.css";
 import "./theme.css";
@@ -91,6 +91,9 @@ import "./theme.css";
 	  <>
 	    <Button variant="secondary"><ArrowRightIcon aria-hidden="true" />Transferir</Button>
 	    <Button variant="outline">Ver movimientos</Button>
+	    <TextField defaultValue="Pago de honorarios" label="Mensaje o Motivo" optional />
+	    <TextField inputMode="decimal" label="Monto" name="amount" startAdornment="S/." />
+	    <MoneyField defaultValue="1250.50" label="Monto a transferir" name="transferAmount" />
 	  </>
 	);
 `
@@ -117,6 +120,14 @@ execFileSync(
   [
     "-e",
     'const { ArrowRightIcon } = require("@intibank/ui/icons"); if (typeof ArrowRightIcon !== "object" && typeof ArrowRightIcon !== "function") throw new Error("CommonJS icon export is unavailable");',
+  ],
+  { cwd: temporaryDirectory, stdio: "inherit" }
+);
+execFileSync(
+  "node",
+  [
+    "-e",
+    'const { MoneyField } = require("@intibank/ui"); if (typeof MoneyField !== "object" && typeof MoneyField !== "function") throw new Error("CommonJS MoneyField export is unavailable");',
   ],
   { cwd: temporaryDirectory, stdio: "inherit" }
 );
@@ -202,11 +213,15 @@ if (packageJson.dependencies?.["@phosphor-icons/react"] !== "2.1.10") {
 
 const esm = readFileSync(join(installedPackage, "dist/index.js"), "utf8");
 const cjs = readFileSync(join(installedPackage, "dist/index.cjs"), "utf8");
+const types = readFileSync(join(installedPackage, "dist/index.d.ts"), "utf8");
 if (!(esm.includes("@base-ui/react") && cjs.includes("@base-ui/react"))) {
   throw new Error("Base UI must remain external to the bundle");
 }
 if (!(esm.includes("react") && cjs.includes("react"))) {
   throw new Error("React must remain external to the bundle");
+}
+if (!(types.includes("MoneyField") && types.includes("TextField"))) {
+  throw new Error("Packed declarations are missing MoneyField or TextField");
 }
 
 const iconsEsm = readFileSync(join(installedPackage, "dist/icons.js"), "utf8");
@@ -235,7 +250,15 @@ for (const iconName of ["ArrowRightIcon", "CheckIcon", "PlusIcon", "XIcon"]) {
 }
 
 const css = readFileSync(join(installedPackage, "dist/styles.css"), "utf8");
-if (!(css.includes("--intibank-color-primary") && css.includes(".ib-button"))) {
+if (
+  !(
+    css.includes("--intibank-color-primary") &&
+    css.includes("--intibank-text-field-focus") &&
+    css.includes(".ib-button") &&
+    css.includes(".ib-money-field") &&
+    css.includes(".ib-text-field")
+  )
+) {
   throw new Error("Compiled CSS is missing tokens or component selectors");
 }
 if (/\*,\s*::(before|after)/.test(css)) {

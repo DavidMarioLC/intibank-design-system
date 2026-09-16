@@ -18,7 +18,10 @@ export default defineConfig({
       {
         extends: true,
         optimizeDeps: {
-          include: ["@storybook/react-vite"],
+          include: [
+            "@intibank/ui > @base-ui/react/field",
+            "@storybook/react-vite",
+          ],
         },
         plugins: [
           storybookTest({

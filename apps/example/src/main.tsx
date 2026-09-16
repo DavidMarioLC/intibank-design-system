@@ -1,4 +1,4 @@
-import { Button } from "@intibank/ui";
+import { Button, MoneyField, TextField } from "@intibank/ui";
 import { ArrowRightIcon } from "@intibank/ui/icons";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -14,6 +14,12 @@ function App() {
         Transferir
       </Button>
       <Button variant="outline">Ver movimientos</Button>
+      <TextField
+        defaultValue="Pago de Honorarios Proyecto Sol Andino"
+        label="Mensaje o Motivo"
+        optional
+      />
+      <MoneyField defaultValue="1250.50" label="Monto" name="amount" />
     </main>
   );
 }

@@ -47,6 +47,21 @@
   --intibank-button-disabled-background: #f5f0ed;
   --intibank-button-disabled-foreground: #aaa6a3;
   --intibank-button-disabled-border: #f5f0ed;
+  --intibank-text-field-label: var(--intibank-color-text);
+  --intibank-text-field-background: var(--intibank-color-surface-elevated);
+  --intibank-text-field-foreground: var(--intibank-color-text);
+  --intibank-text-field-placeholder: var(--intibank-color-text-muted);
+  --intibank-text-field-border: var(--intibank-color-border);
+  --intibank-text-field-hover-border: #a8a29e;
+  --intibank-text-field-focus: var(--intibank-color-primary);
+  --intibank-text-field-invalid: #dc2626;
+  --intibank-text-field-disabled-background: #f5f0ed;
+  --intibank-text-field-disabled-foreground: #aaa6a3;
+  --intibank-text-field-disabled-border: #e7e5e4;
+  --intibank-text-field-readonly-background: #fafaf9;
+  --intibank-text-field-readonly-border: #d6d3d1;
+  --intibank-text-field-supporting: var(--intibank-color-text-muted);
+  --intibank-text-field-adornment: var(--intibank-color-text-muted);
   --intibank-font-family:
     "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
   --intibank-radius-sm: 0.5rem;
@@ -187,8 +202,161 @@
     opacity: 1;
   }
 
+  .ib-text-field,
+  .ib-text-field * {
+    box-sizing: border-box;
+  }
+
+  .ib-text-field {
+    display: block;
+    width: 100%;
+    margin: 0;
+    font-family: var(--intibank-font-family);
+  }
+
+  .ib-text-field__label {
+    display: block;
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    color: var(--intibank-text-field-label);
+    cursor: pointer;
+  }
+
+  .ib-text-field__optional {
+    font-weight: inherit;
+  }
+
+  .ib-text-field__control {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    width: 100%;
+    height: 4rem;
+    padding-inline: 1.5rem;
+    color: var(--intibank-text-field-foreground);
+    background: var(--intibank-text-field-background);
+    border: 1px solid var(--intibank-text-field-border);
+    border-radius: var(--intibank-radius-md);
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .ib-text-field:not([data-disabled]):not([data-readonly]):not([data-invalid])
+    .ib-text-field__control:not(:focus-within):hover {
+    border-color: var(--intibank-text-field-hover-border);
+  }
+
+  .ib-text-field__control:focus-within {
+    border-color: var(--intibank-text-field-focus);
+    box-shadow: inset 0 0 0 1px var(--intibank-text-field-focus);
+  }
+
+  .ib-text-field__input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    font: inherit;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.75rem;
+    color: inherit;
+    appearance: none;
+    outline: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .ib-text-field__input::placeholder {
+    color: var(--intibank-text-field-placeholder);
+    opacity: 1;
+  }
+
+  .ib-text-field__adornment {
+    flex: none;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.75rem;
+    color: var(--intibank-text-field-adornment);
+    white-space: nowrap;
+  }
+
+  .ib-text-field__message {
+    display: block;
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--intibank-text-field-supporting);
+  }
+
+  .ib-text-field[data-invalid] .ib-text-field__control {
+    border-color: var(--intibank-text-field-invalid);
+  }
+
+  .ib-text-field[data-invalid] .ib-text-field__control:focus-within {
+    box-shadow: inset 0 0 0 1px var(--intibank-text-field-invalid);
+  }
+
+  .ib-text-field__error {
+    color: var(--intibank-text-field-invalid);
+  }
+
+  .ib-text-field[data-disabled] .ib-text-field__label {
+    color: var(--intibank-text-field-disabled-foreground);
+    cursor: not-allowed;
+  }
+
+  .ib-text-field[data-disabled] .ib-text-field__control {
+    color: var(--intibank-text-field-disabled-foreground);
+    background: var(--intibank-text-field-disabled-background);
+    border-color: var(--intibank-text-field-disabled-border);
+  }
+
+  .ib-text-field[data-disabled] .ib-text-field__input {
+    -webkit-text-fill-color: currentColor;
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  .ib-text-field[data-readonly] .ib-text-field__control {
+    background: var(--intibank-text-field-readonly-background);
+    border-color: var(--intibank-text-field-readonly-border);
+  }
+
+  .ib-text-field[data-readonly]:not([data-invalid])
+    .ib-text-field__control:focus-within {
+    border-color: var(--intibank-text-field-focus);
+  }
+
+  .ib-text-field[data-readonly] .ib-text-field__input {
+    cursor: default;
+  }
+
+  .ib-money-field__input,
+  .ib-money-field .ib-text-field__adornment {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ib-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .ib-button {
+    .ib-button,
+    .ib-text-field__control {
       transition: none;
     }
   }
@@ -200,6 +368,17 @@
 
     .ib-button:focus-visible {
       outline-color: Highlight;
+    }
+
+    .ib-text-field__control,
+    .ib-text-field[data-invalid] .ib-text-field__control {
+      border-color: CanvasText;
+    }
+
+    .ib-text-field__control:focus-within,
+    .ib-text-field[data-invalid] .ib-text-field__control:focus-within {
+      border-color: Highlight;
+      box-shadow: inset 0 0 0 1px Highlight;
     }
   }
 }

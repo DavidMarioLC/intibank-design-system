@@ -1,4 +1,4 @@
-import { Button, MoneyField, TextField } from "@intibank/ui";
+import { Avatar, Button, MoneyField, TextField } from "@intibank/ui";
 import { ArrowRightIcon } from "@intibank/ui/icons";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -9,6 +9,7 @@ function App() {
   return (
     <main className="example-shell">
       <p>Esta aplicación no instala ni configura Tailwind.</p>
+      <Avatar aria-label="María Elena" initials="ME" />
       <Button variant="secondary">
         <ArrowRightIcon aria-hidden="true" />
         Transferir

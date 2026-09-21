@@ -1,9 +1,11 @@
+export type { AvatarProps, AvatarSize } from "./avatar/avatar";
+// biome-ignore lint/performance/noBarrelFile: This file is the deliberate public package entry point.
+export { Avatar } from "./avatar/avatar";
 export type {
   ButtonProps,
   ButtonSize,
   ButtonVariant,
 } from "./button/button";
-// biome-ignore lint/performance/noBarrelFile: This file is the deliberate public package entry point.
 export { Button } from "./button/button";
 export type {
   MoneyFieldProps,

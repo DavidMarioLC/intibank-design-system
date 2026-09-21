@@ -47,6 +47,10 @@
   --intibank-button-disabled-background: #f5f0ed;
   --intibank-button-disabled-foreground: #aaa6a3;
   --intibank-button-disabled-border: #f5f0ed;
+  --intibank-avatar-background: #f5ece6;
+  --intibank-avatar-foreground: #744300;
+  --intibank-avatar-border: #e7e5e4;
+  --intibank-avatar-radius: 25%;
   --intibank-text-field-label: var(--intibank-color-text);
   --intibank-text-field-background: var(--intibank-color-surface-elevated);
   --intibank-text-field-foreground: var(--intibank-color-text);
@@ -72,6 +76,51 @@
 }
 
 @layer components {
+  .ib-avatar {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    overflow: hidden;
+    font-family: var(--intibank-font-family);
+    font-weight: 600;
+    line-height: 1;
+    vertical-align: middle;
+    color: var(--intibank-avatar-foreground);
+    white-space: nowrap;
+    user-select: none;
+    background: var(--intibank-avatar-background);
+    border: 1px solid var(--intibank-avatar-border);
+    border-radius: var(--intibank-avatar-radius);
+  }
+
+  .ib-avatar--sm {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.875rem;
+  }
+
+  .ib-avatar--md {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.25rem;
+  }
+
+  .ib-avatar--lg {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-size: 1.75rem;
+  }
+
+  .ib-avatar__initials {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+
   .ib-button {
     appearance: none;
     align-items: center;
@@ -362,6 +411,12 @@
   }
 
   @media (forced-colors: active) {
+    .ib-avatar {
+      color: CanvasText;
+      background: Canvas;
+      border-color: CanvasText;
+    }
+
     .ib-button {
       border-color: ButtonText;
     }

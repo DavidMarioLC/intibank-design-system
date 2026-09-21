@@ -83,12 +83,13 @@ writeFileSync(
   join(temporaryDirectory, "src.jsx"),
   `import React from "react";
 import { createRoot } from "react-dom/client";
-import { Button, MoneyField, TextField } from "@intibank/ui";
+import { Avatar, Button, MoneyField, TextField } from "@intibank/ui";
 	import { ArrowRightIcon } from "@intibank/ui/icons";
 import "@intibank/ui/styles.css";
 import "./theme.css";
 	createRoot(document.querySelector("#root")).render(
 	  <>
+	    <Avatar aria-label="María Elena" initials="ME" />
 	    <Button variant="secondary"><ArrowRightIcon aria-hidden="true" />Transferir</Button>
 	    <Button variant="outline">Ver movimientos</Button>
 	    <TextField defaultValue="Pago de honorarios" label="Mensaje o Motivo" optional />
@@ -127,7 +128,7 @@ execFileSync(
   "node",
   [
     "-e",
-    'const { MoneyField } = require("@intibank/ui"); if (typeof MoneyField !== "object" && typeof MoneyField !== "function") throw new Error("CommonJS MoneyField export is unavailable");',
+    'const { Avatar, MoneyField } = require("@intibank/ui"); for (const [name, value] of Object.entries({ Avatar, MoneyField })) if (typeof value !== "object" && typeof value !== "function") throw new Error("CommonJS " + name + " export is unavailable");',
   ],
   { cwd: temporaryDirectory, stdio: "inherit" }
 );
@@ -220,8 +221,16 @@ if (!(esm.includes("@base-ui/react") && cjs.includes("@base-ui/react"))) {
 if (!(esm.includes("react") && cjs.includes("react"))) {
   throw new Error("React must remain external to the bundle");
 }
-if (!(types.includes("MoneyField") && types.includes("TextField"))) {
-  throw new Error("Packed declarations are missing MoneyField or TextField");
+if (
+  !(
+    types.includes("Avatar") &&
+    types.includes("MoneyField") &&
+    types.includes("TextField")
+  )
+) {
+  throw new Error(
+    "Packed declarations are missing Avatar, MoneyField, or TextField"
+  );
 }
 
 const iconsEsm = readFileSync(join(installedPackage, "dist/icons.js"), "utf8");
@@ -253,7 +262,9 @@ const css = readFileSync(join(installedPackage, "dist/styles.css"), "utf8");
 if (
   !(
     css.includes("--intibank-color-primary") &&
+    css.includes("--intibank-avatar-background") &&
     css.includes("--intibank-text-field-focus") &&
+    css.includes(".ib-avatar") &&
     css.includes(".ib-button") &&
     css.includes(".ib-money-field") &&
     css.includes(".ib-text-field")

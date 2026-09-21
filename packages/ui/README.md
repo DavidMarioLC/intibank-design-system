@@ -24,6 +24,27 @@ export function TransferAction() {
 }
 ```
 
+## Avatar
+
+`Avatar` is a non-interactive initials marker with the institutional rounded-square
+treatment. It supports `sm` (40px), `md` (56px), and `lg` (72px); `md` is the
+default.
+
+```tsx
+import { Avatar } from "@intibank/ui";
+
+export function AccountIdentity() {
+  return <Avatar aria-label="María Elena" initials="ME" size="md" />;
+}
+```
+
+Pass one or two initials explicitly. Avatar does not derive, truncate, or change
+the supplied text. When the marker represents a known person or account, provide
+a meaningful `aria-label`; assistive technology will announce that identity once
+instead of repeating the visible initials. Without an accessible label, the
+initials remain available as ordinary text. Native span attributes, custom
+classes, and refs are forwarded to the root element.
+
 ## Button
 
 `Button` is built on Base UI and supports the institutional variants `primary`,
@@ -190,6 +211,15 @@ TextField and MoneyField expose the following semantic variables:
 --intibank-text-field-adornment: #78716c;
 ```
 
+Avatar exposes the following semantic variables:
+
+```css
+--intibank-avatar-background: #f5ece6;
+--intibank-avatar-foreground: #744300;
+--intibank-avatar-border: #e7e5e4;
+--intibank-avatar-radius: 25%;
+```
+
 For structural exceptions, pass `className` and load the consumer stylesheet
 after `@intibank/ui/styles.css`. Intibank selectors use the `ib-` prefix and the
 distributed stylesheet does not include a global reset.
@@ -202,7 +232,7 @@ provided system font fallback.
 
 ## Public exports
 
-- `@intibank/ui`: `Button`, `TextField`, `MoneyField`, and their public TypeScript types.
+- `@intibank/ui`: `Avatar`, `Button`, `TextField`, `MoneyField`, and their public TypeScript types.
 - `@intibank/ui/icons`: curated Phosphor icon components.
 - `@intibank/ui/styles.css`: compiled tokens and component styles.
 

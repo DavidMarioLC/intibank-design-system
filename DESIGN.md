@@ -256,6 +256,19 @@ The shape system employs roundedness level **2** (`0.5rem` base), extending grac
 - Active/Focus: Border `2px solid #F59E0B`, zero intrusive blur glow.
 - Currency field prefixes (e.g., _S/._) styled in secondary `#78716C` at `headline-md` scale.
 
+### Avatars
+
+- Initials avatars use a rounded-square silhouette with a `25%` radius, warm
+  `#F5ECE6` surface, `1px solid #E7E5E4` border, and dark brown `#744300`
+  initials in semibold Hanken Grotesk.
+- Sizes follow the component grid: 40px (`sm`), 56px (`md`), and 72px (`lg`),
+  with proportional 14px, 20px, and 28px initials. Medium is the default.
+- Content is limited to one or two consumer-provided initials; the component
+  does not derive, truncate, or transform names.
+- The approved screenshot is a scaled presentation reference. Runtime sizes are
+  normalized to the system grid while preserving its hairline border, centered
+  type, warm palette, and rounded-square proportions.
+
 ### Cards & Ledger Lists
 
 - **Balance Hero Card:** Deep Night Indigo `#1E1B4B` background, white label copy, primary Solar Amber `#F59E0B` metrics, subtle hairline border in `rgba(255,255,255,0.08)`.

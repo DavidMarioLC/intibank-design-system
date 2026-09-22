@@ -1,9 +1,34 @@
-import { Avatar, Badge, Button, MoneyField, TextField } from "@intibank/ui";
+import {
+  Avatar,
+  Badge,
+  Button,
+  DynamicToken,
+  MoneyField,
+  OtpInput,
+  TextField,
+} from "@intibank/ui";
 import { ArrowRightIcon } from "@intibank/ui/icons";
-import { StrictMode } from "react";
+import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "@intibank/ui/styles.css";
 import "./theme.css";
+
+const handleTokenResend = () => undefined;
+
+function OtpExample() {
+  const [code, setCode] = useState("");
+
+  return (
+    <OtpInput
+      helperText="Ingresa el código que enviamos a tu celular."
+      label="Código de verificación"
+      name="otp"
+      onValueChange={setCode}
+      required
+      value={code}
+    />
+  );
+}
 
 function App() {
   return (
@@ -22,6 +47,18 @@ function App() {
         optional
       />
       <MoneyField defaultValue="1250.50" label="Monto" name="amount" />
+      <OtpExample />
+      <DynamicToken
+        code="739418"
+        description="Ingresa el código seguro generado automáticamente en tu App Intibank Móvil."
+        expiryLabel="Expira en:"
+        heading="Token Digital Dinámico"
+        onResend={handleTokenResend}
+        remainingSeconds={8}
+        resendLabel="Reenviar código"
+        status="active"
+        statusLabel="Activo"
+      />
     </main>
   );
 }

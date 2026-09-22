@@ -2,6 +2,10 @@ import "@fontsource-variable/hanken-grotesk";
 import "@intibank/ui/styles.css";
 import type { Preview } from "@storybook/react-vite";
 
+if (typeof document !== "undefined") {
+  document.documentElement.lang = "es";
+}
+
 const preview: Preview = {
   parameters: {
     a11y: { test: "error" },

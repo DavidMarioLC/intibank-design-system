@@ -83,10 +83,23 @@ writeFileSync(
   join(temporaryDirectory, "src.jsx"),
   `import React from "react";
 import { createRoot } from "react-dom/client";
-import { Avatar, Badge, Button, MoneyField, TextField } from "@intibank/ui";
+import { Avatar, Badge, Button, DynamicToken, MoneyField, OtpInput, TextField } from "@intibank/ui";
 	import { ArrowRightIcon } from "@intibank/ui/icons";
 import "@intibank/ui/styles.css";
 import "./theme.css";
+	function OtpDemo() {
+	  const [otp, setOtp] = React.useState("");
+	  const handleSubmit = (event) => {
+	    event.preventDefault();
+	    new FormData(event.currentTarget).get("otp");
+	  };
+	  return (
+	    <form onSubmit={handleSubmit}>
+	      <OtpInput helperText="Ingresa el código recibido" label="Código de verificación" name="otp" onValueChange={setOtp} required value={otp} />
+	      <button type="submit">Verificar</button>
+	    </form>
+	  );
+	}
 	createRoot(document.querySelector("#root")).render(
 	  <>
 	    <Avatar aria-label="María Elena" initials="ME" />
@@ -96,6 +109,8 @@ import "./theme.css";
 	    <TextField defaultValue="Pago de honorarios" label="Mensaje o Motivo" optional />
 	    <TextField inputMode="decimal" label="Monto" name="amount" startAdornment="S/." />
 	    <MoneyField defaultValue="1250.50" label="Monto a transferir" name="transferAmount" />
+	    <OtpDemo />
+	    <DynamicToken code="739418" description="Ingresa el código seguro" expiryLabel="Expira en:" heading="Token Digital Dinámico" onResend={() => undefined} remainingSeconds={8} resendLabel="Reenviar código" status="active" statusLabel="Activo" />
 	  </>
 	);
 `
@@ -129,7 +144,7 @@ execFileSync(
   "node",
   [
     "-e",
-    'const { Avatar, Badge, MoneyField } = require("@intibank/ui"); for (const [name, value] of Object.entries({ Avatar, Badge, MoneyField })) if (typeof value !== "object" && typeof value !== "function") throw new Error("CommonJS " + name + " export is unavailable");',
+    'const { Avatar, Badge, DynamicToken, MoneyField, OtpInput } = require("@intibank/ui"); for (const [name, value] of Object.entries({ Avatar, Badge, DynamicToken, MoneyField, OtpInput })) if (typeof value !== "object" && typeof value !== "function") throw new Error("CommonJS " + name + " export is unavailable");',
   ],
   { cwd: temporaryDirectory, stdio: "inherit" }
 );
@@ -226,12 +241,14 @@ if (
   !(
     types.includes("Avatar") &&
     types.includes("Badge") &&
+    types.includes("DynamicToken") &&
     types.includes("MoneyField") &&
+    types.includes("OtpInput") &&
     types.includes("TextField")
   )
 ) {
   throw new Error(
-    "Packed declarations are missing Avatar, Badge, MoneyField, or TextField"
+    "Packed declarations are missing Avatar, Badge, DynamicToken, MoneyField, OtpInput, or TextField"
   );
 }
 
@@ -266,11 +283,15 @@ if (
     css.includes("--intibank-color-primary") &&
     css.includes("--intibank-avatar-background") &&
     css.includes("--intibank-badge-success-background") &&
+    css.includes("--intibank-dynamic-token-surface") &&
+    css.includes("--intibank-otp-input-focus") &&
     css.includes("--intibank-text-field-focus") &&
     css.includes(".ib-avatar") &&
     css.includes(".ib-badge") &&
     css.includes(".ib-button") &&
+    css.includes(".ib-dynamic-token") &&
     css.includes(".ib-money-field") &&
+    css.includes(".ib-otp-input") &&
     css.includes(".ib-text-field")
   )
 ) {

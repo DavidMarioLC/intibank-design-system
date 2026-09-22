@@ -25,7 +25,7 @@ JavaScript and compiled stylesheet exports.
 
 #### Scenario: Catalog is built
 - **WHEN** the Storybook production build runs
-- **THEN** focused Avatar, Badge, Button, TextField, and MoneyField stories cover their documented variants, states, formatting, focus, and interactions
+- **THEN** focused Avatar, Badge, Button, DynamicToken, OtpInput, TextField, and MoneyField stories cover their documented variants, states, formatting, focus, and interactions
 
 #### Scenario: Accessibility tests run
 - **WHEN** Storybook tests execute in Chromium
@@ -37,7 +37,7 @@ React and a bundler but does not depend on Tailwind.
 
 #### Scenario: Packed consumer builds
 - **WHEN** the package verification command runs
-- **THEN** the temporary application installs the tarball, imports Avatar, Badge, Button, TextField, MoneyField, and CSS, and builds them successfully without Tailwind
+- **THEN** the temporary application installs the tarball, imports Avatar, Badge, Button, DynamicToken, OtpInput, TextField, MoneyField, and CSS, and builds them successfully without Tailwind
 
 ### Requirement: Guarded future delivery
 Release and Pages workflows SHALL remain manually triggered, SHALL run verification before external delivery, and SHALL use short-lived npm Trusted Publishing credentials for automated package releases without storing a persistent publish token.

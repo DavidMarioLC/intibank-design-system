@@ -20,6 +20,8 @@ export default defineConfig({
         optimizeDeps: {
           include: [
             "@intibank/ui > @base-ui/react/field",
+            "@intibank/ui > @phosphor-icons/react/dist/csr/LockKey",
+            "@intibank/ui > @phosphor-icons/react/dist/csr/Timer",
             "@storybook/react-vite",
           ],
         },

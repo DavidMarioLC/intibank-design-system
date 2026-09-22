@@ -83,13 +83,14 @@ writeFileSync(
   join(temporaryDirectory, "src.jsx"),
   `import React from "react";
 import { createRoot } from "react-dom/client";
-import { Avatar, Button, MoneyField, TextField } from "@intibank/ui";
+import { Avatar, Badge, Button, MoneyField, TextField } from "@intibank/ui";
 	import { ArrowRightIcon } from "@intibank/ui/icons";
 import "@intibank/ui/styles.css";
 import "./theme.css";
 	createRoot(document.querySelector("#root")).render(
 	  <>
 	    <Avatar aria-label="María Elena" initials="ME" />
+	    <Badge variant="success">Activo</Badge>
 	    <Button variant="secondary"><ArrowRightIcon aria-hidden="true" />Transferir</Button>
 	    <Button variant="outline">Ver movimientos</Button>
 	    <TextField defaultValue="Pago de honorarios" label="Mensaje o Motivo" optional />
@@ -128,7 +129,7 @@ execFileSync(
   "node",
   [
     "-e",
-    'const { Avatar, MoneyField } = require("@intibank/ui"); for (const [name, value] of Object.entries({ Avatar, MoneyField })) if (typeof value !== "object" && typeof value !== "function") throw new Error("CommonJS " + name + " export is unavailable");',
+    'const { Avatar, Badge, MoneyField } = require("@intibank/ui"); for (const [name, value] of Object.entries({ Avatar, Badge, MoneyField })) if (typeof value !== "object" && typeof value !== "function") throw new Error("CommonJS " + name + " export is unavailable");',
   ],
   { cwd: temporaryDirectory, stdio: "inherit" }
 );
@@ -224,12 +225,13 @@ if (!(esm.includes("react") && cjs.includes("react"))) {
 if (
   !(
     types.includes("Avatar") &&
+    types.includes("Badge") &&
     types.includes("MoneyField") &&
     types.includes("TextField")
   )
 ) {
   throw new Error(
-    "Packed declarations are missing Avatar, MoneyField, or TextField"
+    "Packed declarations are missing Avatar, Badge, MoneyField, or TextField"
   );
 }
 
@@ -263,8 +265,10 @@ if (
   !(
     css.includes("--intibank-color-primary") &&
     css.includes("--intibank-avatar-background") &&
+    css.includes("--intibank-badge-success-background") &&
     css.includes("--intibank-text-field-focus") &&
     css.includes(".ib-avatar") &&
+    css.includes(".ib-badge") &&
     css.includes(".ib-button") &&
     css.includes(".ib-money-field") &&
     css.includes(".ib-text-field")

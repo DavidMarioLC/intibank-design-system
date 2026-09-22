@@ -269,6 +269,20 @@ The shape system employs roundedness level **2** (`0.5rem` base), extending grac
   normalized to the system grid while preserving its hairline border, centered
   type, warm palette, and rounded-square proportions.
 
+### Badges
+
+- Status badges use a 40px fully rounded pill with 24px inline padding, a 12px
+  gap, a 12px circular indicator, and 20px/24px semibold Hanken Grotesk text.
+- Semantic treatments pair pale surfaces with readable text and a brighter
+  indicator: success uses `#EAF6ED` / `#0F7A37` / `#16A34A`; warning uses
+  `#FFF7E6` / `#9A5D00` / `#F5B400` with a `#F8DCA3` border; danger uses
+  `#FEE2E2` / `#B91C1C` / `#DC2626` with a `#FCA5A5` border.
+- Labels must be concise, visible, and meaningful without color. The circular
+  indicator is decorative and does not replace status text.
+- The approved screenshots use different presentation scales. Runtime geometry
+  is normalized to one system size, and foregrounds are darker than the bright
+  accents where needed to preserve readable contrast.
+
 ### Cards & Ledger Lists
 
 - **Balance Hero Card:** Deep Night Indigo `#1E1B4B` background, white label copy, primary Solar Amber `#F59E0B` metrics, subtle hairline border in `rgba(255,255,255,0.08)`.

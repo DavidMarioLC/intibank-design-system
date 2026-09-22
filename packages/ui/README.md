@@ -45,6 +45,26 @@ instead of repeating the visible initials. Without an accessible label, the
 initials remain available as ordinary text. Native span attributes, custom
 classes, and refs are forwarded to the root element.
 
+## Badge
+
+`Badge` is a non-interactive status label with a required semantic variant:
+`success`, `warning`, or `danger`. Supply the visible label as children so its
+meaning remains clear without relying on color.
+
+```tsx
+import { Badge } from "@intibank/ui";
+
+export function AccountStatus() {
+  return <Badge variant="success">Activo</Badge>;
+}
+```
+
+Use concise labels such as `Activo`, `Pendiente`, or `Rechazado`. The circular
+indicator is decorative and hidden from assistive technology; the visible text
+is the accessible content. Badge does not add a live-region role or interactive
+behavior. Consumers may pass native span attributes, custom classes, refs, and
+ARIA attributes when a surrounding flow needs additional semantics.
+
 ## Button
 
 `Button` is built on Base UI and supports the institutional variants `primary`,
@@ -220,6 +240,24 @@ Avatar exposes the following semantic variables:
 --intibank-avatar-radius: 25%;
 ```
 
+Badge exposes background, foreground, border, and indicator variables for each
+semantic variant:
+
+```css
+--intibank-badge-success-background: #eaf6ed;
+--intibank-badge-success-foreground: #0f7a37;
+--intibank-badge-success-border: transparent;
+--intibank-badge-success-indicator: #16a34a;
+--intibank-badge-warning-background: #fff7e6;
+--intibank-badge-warning-foreground: #9a5d00;
+--intibank-badge-warning-border: #f8dca3;
+--intibank-badge-warning-indicator: #f5b400;
+--intibank-badge-danger-background: #fee2e2;
+--intibank-badge-danger-foreground: #b91c1c;
+--intibank-badge-danger-border: #fca5a5;
+--intibank-badge-danger-indicator: #dc2626;
+```
+
 For structural exceptions, pass `className` and load the consumer stylesheet
 after `@intibank/ui/styles.css`. Intibank selectors use the `ib-` prefix and the
 distributed stylesheet does not include a global reset.
@@ -232,7 +270,7 @@ provided system font fallback.
 
 ## Public exports
 
-- `@intibank/ui`: `Avatar`, `Button`, `TextField`, `MoneyField`, and their public TypeScript types.
+- `@intibank/ui`: `Avatar`, `Badge`, `Button`, `TextField`, `MoneyField`, and their public TypeScript types.
 - `@intibank/ui/icons`: curated Phosphor icon components.
 - `@intibank/ui/styles.css`: compiled tokens and component styles.
 

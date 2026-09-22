@@ -51,6 +51,18 @@
   --intibank-avatar-foreground: #744300;
   --intibank-avatar-border: #e7e5e4;
   --intibank-avatar-radius: 25%;
+  --intibank-badge-success-background: #eaf6ed;
+  --intibank-badge-success-foreground: #0f7a37;
+  --intibank-badge-success-border: transparent;
+  --intibank-badge-success-indicator: #16a34a;
+  --intibank-badge-warning-background: #fff7e6;
+  --intibank-badge-warning-foreground: #9a5d00;
+  --intibank-badge-warning-border: #f8dca3;
+  --intibank-badge-warning-indicator: #f5b400;
+  --intibank-badge-danger-background: #fee2e2;
+  --intibank-badge-danger-foreground: #b91c1c;
+  --intibank-badge-danger-border: #fca5a5;
+  --intibank-badge-danger-indicator: #dc2626;
   --intibank-text-field-label: var(--intibank-color-text);
   --intibank-text-field-background: var(--intibank-color-surface-elevated);
   --intibank-text-field-foreground: var(--intibank-color-text);
@@ -119,6 +131,56 @@
     max-width: 100%;
     overflow: hidden;
     text-overflow: clip;
+  }
+
+  .ib-badge {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: none;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding-inline: 1.5rem;
+    font-family: var(--intibank-font-family);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    vertical-align: middle;
+    color: var(--ib-badge-foreground);
+    white-space: nowrap;
+    background: var(--ib-badge-background);
+    border: 1px solid var(--ib-badge-border);
+    border-radius: var(--intibank-radius-full);
+  }
+
+  .ib-badge--success {
+    --ib-badge-background: var(--intibank-badge-success-background);
+    --ib-badge-foreground: var(--intibank-badge-success-foreground);
+    --ib-badge-border: var(--intibank-badge-success-border);
+    --ib-badge-indicator: var(--intibank-badge-success-indicator);
+  }
+
+  .ib-badge--warning {
+    --ib-badge-background: var(--intibank-badge-warning-background);
+    --ib-badge-foreground: var(--intibank-badge-warning-foreground);
+    --ib-badge-border: var(--intibank-badge-warning-border);
+    --ib-badge-indicator: var(--intibank-badge-warning-indicator);
+  }
+
+  .ib-badge--danger {
+    --ib-badge-background: var(--intibank-badge-danger-background);
+    --ib-badge-foreground: var(--intibank-badge-danger-foreground);
+    --ib-badge-border: var(--intibank-badge-danger-border);
+    --ib-badge-indicator: var(--intibank-badge-danger-indicator);
+  }
+
+  .ib-badge__indicator {
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--ib-badge-indicator);
+    border-radius: var(--intibank-radius-full);
   }
 
   .ib-button {
@@ -415,6 +477,16 @@
       color: CanvasText;
       background: Canvas;
       border-color: CanvasText;
+    }
+
+    .ib-badge {
+      color: CanvasText;
+      background: Canvas;
+      border-color: CanvasText;
+    }
+
+    .ib-badge__indicator {
+      background: CanvasText;
     }
 
     .ib-button {

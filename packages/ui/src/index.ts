@@ -1,6 +1,8 @@
 export type { AvatarProps, AvatarSize } from "./avatar/avatar";
 // biome-ignore lint/performance/noBarrelFile: This file is the deliberate public package entry point.
 export { Avatar } from "./avatar/avatar";
+export type { BadgeProps, BadgeVariant } from "./badge/badge";
+export { Badge } from "./badge/badge";
 export type {
   ButtonProps,
   ButtonSize,
